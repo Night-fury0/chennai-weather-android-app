@@ -6,14 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".Satellite">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="SATELLITE"/>
+
     <ImageView
         android:id="@+id/satellite1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="400dp"
+        android:layout_marginBottom="320dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <Button
@@ -21,23 +29,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp"
-        android:text="INSAT Water Vapour" />
+        android:layout_marginTop="500dp"
+        android:text="Water Vapour" />
 
     <Button
         android:id="@+id/visButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp"
-        android:text="INSAT Visible" />
+        android:layout_marginTop="550dp"
+        android:text="Visible" />
 
     <Button
         android:id="@+id/irlButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="550dp"
-        android:text="INSAT Infrared Light" />
+        android:layout_marginTop="600dp"
+        android:text="Infrared-1" />
+
+    <Button
+        android:id="@+id/ctbtButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="650dp"
+        android:text="Cloud Top Brightness Temp" />
 
 </RelativeLayout>

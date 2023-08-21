@@ -18,6 +18,7 @@ class Satellite : AppCompatActivity() {
         val wvButton = findViewById<Button>(R.id.wvButton)
         val visButton = findViewById<Button>(R.id.visButton)
         val irlButton = findViewById<Button>(R.id.irlButton)
+        val ctbtButton = findViewById<Button>(R.id.ctbtButton)
 
         wvButton.setOnClickListener {
             runBlocking {
@@ -33,7 +34,13 @@ class Satellite : AppCompatActivity() {
 
         irlButton.setOnClickListener {
             runBlocking {
-                satellite1.load("https://mausam.imd.gov.in/Satellite/3Dasiasec_irl.jpg")
+                satellite1.load("https://mausam.imd.gov.in/Satellite/3Dasiasec_ir1.jpg")
+            }
+        }
+
+        ctbtButton.setOnClickListener {
+            runBlocking {
+                satellite1.load("https://mausam.imd.gov.in/Satellite/3Dasiasec_ctbt.jpg")
             }
         }
 

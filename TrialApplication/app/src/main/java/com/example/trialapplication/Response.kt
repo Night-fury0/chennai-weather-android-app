@@ -60,14 +60,14 @@ data class Daily(
 		return "Time: ${time}\n"+
 				"Sunrise: ${sunrise}\n"+
 				"Sunset: ${sunset}\n"+
-				"UV Index Max: ${uv_index_max}\n"+
-				"UV Index Clear Sky Max: ${uv_index_clear_sky_max}\n"+
-				"Precipitation Sum: ${precipitation_sum}\n"+
-				"Wind Speed 10m Max: ${windspeed_10m_max}\n"+
-				"Wind Gusts 10m Max: ${windgusts_10m_max}\n"+
-				"Wind Direction 10m Dominant: ${winddirection_10m_dominant}\n"+
-				"Temperature 2m Max: ${temperature_2m_max}\n"+
-				"Temperature 2m Min: ${temperature_2m_min}"
+				"UV Index (Max): ${uv_index_max}\n"+
+				"UV Index Clear Sky (Max): ${uv_index_clear_sky_max}\n"+
+				"Precipitation: ${precipitation_sum}\n"+
+				"Wind Speed (Max): ${windspeed_10m_max}\n"+
+				"Wind Gusts (Max): ${windgusts_10m_max}\n"+
+				"Wind Direction (Dominant): ${winddirection_10m_dominant}\n"+
+				"Temperature (Max): ${temperature_2m_max}\n"+
+				"Temperature (Min): ${temperature_2m_min}"
 	}
 }
 

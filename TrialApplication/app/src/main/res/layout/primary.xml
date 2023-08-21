@@ -16,10 +16,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="250dp"
         android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="Welcome to App!"/>
+        android:textSize="30sp"
+        android:text="CHENNAI WEATHER"/>
 
     <ImageView
         android:id="@+id/imageView"
@@ -29,37 +29,58 @@
         android:layout_marginTop="40dp"
         tools:src="@tools:sample/backgrounds/scenic" />
 
+    <TextView
+        android:id="@+id/currentDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="325dp"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:textAlignment="center"
+        android:text="21 Aug 2023" />
+
+    <TextView
+        android:id="@+id/currentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="350dp"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:textAlignment="center"
+        android:text="22:51" />
+
     <Button
         android:id="@+id/weatherButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="350dp"
-        android:text="Weather Data" />
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="425dp"
+        android:text="Weather" />
 
     <Button
         android:id="@+id/radarButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="220dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="425dp"
         android:text="Radar" />
 
     <Button
         android:id="@+id/satelliteButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="475dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="550dp"
         android:text="Satellite" />
 
     <Button
         android:id="@+id/newsButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="220dp"
-        android:layout_marginTop="475dp"
-        android:text="News" />
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="550dp"
+        android:text="Historical Data" />
+
 
     <TextView
         android:id="@+id/developerTextView"
@@ -71,27 +92,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:text="Developed by ---"
+        android:text="Developed by Night-fury0"
         android:textAlignment="center" />
-
-    <TextView
-        android:id="@+id/currentDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:textAlignment="center"
-        android:text="date" />
-
-    <TextView
-        android:id="@+id/currentTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:textAlignment="center"
-        android:text="time" />
 
 </RelativeLayout>

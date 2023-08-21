@@ -5,14 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="20dp"
+         android:textSize="18sp"
+         android:text="RADAR"/>
+
     <ImageView
         android:id="@+id/radar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="400dp"
+        android:layout_marginBottom="320dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <Button
@@ -20,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="500dp"
         android:layout_marginStart="60dp"
         android:text="Radar 1" />
 
@@ -29,21 +37,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="500dp"
         android:text="Radar 2" />
     <Button
         android:id="@+id/radar3Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="260dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="500dp"
         android:text="Radar 3" />
     <Button
         android:id="@+id/radar4Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="550dp"
         android:layout_marginStart="60dp"
         android:text="Radar 4" />
     <Button
@@ -51,14 +59,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="550dp"
         android:text="Radar 5" />
     <Button
         android:id="@+id/radar6Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="550dp"
         android:layout_marginStart="260dp"
         android:text="Radar 6" />
 
