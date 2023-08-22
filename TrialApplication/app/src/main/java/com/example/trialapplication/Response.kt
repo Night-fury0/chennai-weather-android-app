@@ -20,12 +20,12 @@ data class CurrentWeather(
 	val time: String
 ){
 	override fun toString(): String {
-		return "Temperature: ${temperature}\n" +
-				"Wind Speed: ${windspeed}\n"+
-				"Wind Direction: ${winddirection}\n"+
-				"Weather Code: ${weathercode}\n"+
-				"Is Day: ${is_day}\n"+
-				"Time: ${time}\n"
+		return "Temperature:				${temperature}\n" +
+				"Wind Speed:				${windspeed}\n"+
+				"Wind Direction:			${winddirection}\n"+
+				"Weather Code:				${weathercode}\n"+
+				"Is Day:					${is_day}\n"+
+				"Time:						${time}\n"
 	}
 }
 

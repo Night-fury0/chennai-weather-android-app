@@ -13,6 +13,7 @@ class MainActivity : ComponentActivity() {
         val weatherButton = findViewById<Button>(R.id.weatherButton);
         val radarButton = findViewById<Button>(R.id.radarButton);
         val satelliteButton = findViewById<Button>(R.id.satelliteButton);
+        val lakeLevelButton = findViewById<Button>(R.id.lakeLevelButton);
         weatherButton.setOnClickListener{
             val intent = Intent(this, Weather::class.java)
             startActivity(intent)
@@ -23,6 +24,10 @@ class MainActivity : ComponentActivity() {
         }
         satelliteButton.setOnClickListener{
             val intent = Intent(this, Satellite::class.java)
+            startActivity(intent)
+        }
+        lakeLevelButton.setOnClickListener{
+            val intent = Intent(this, LakeLevel::class.java)
             startActivity(intent)
         }
 

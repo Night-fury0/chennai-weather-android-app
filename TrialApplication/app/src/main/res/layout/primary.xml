@@ -19,6 +19,7 @@
         android:layout_marginTop="250dp"
         android:textAlignment="center"
         android:textSize="30sp"
+        android:fontFamily="sans-serif-black"
         android:text="CHENNAI WEATHER"/>
 
     <ImageView
@@ -29,25 +30,17 @@
         android:layout_marginTop="40dp"
         tools:src="@tools:sample/backgrounds/scenic" />
 
-    <TextView
-        android:id="@+id/currentDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="325dp"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:textAlignment="center"
-        android:text="21 Aug 2023" />
-
-    <TextView
+    <TextClock
         android:id="@+id/currentTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="350dp"
-        android:layout_centerHorizontal="true"
         android:ems="10"
         android:textAlignment="center"
-        android:text="22:51" />
+        android:timeZone="Asia/Kolkata"
+        android:format24Hour="dd-MMM-yyyy | HH:mm:ss zzz"
+        android:textSize="16sp"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/weatherButton"
@@ -63,7 +56,7 @@
         android:layout_height="100dp"
         android:layout_marginStart="220dp"
         android:layout_marginTop="425dp"
-        android:text="Radar" />
+        android:text="RADAR" />
 
     <Button
         android:id="@+id/satelliteButton"
@@ -71,15 +64,15 @@
         android:layout_height="100dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="550dp"
-        android:text="Satellite" />
+        android:text="SATELLITE" />
 
     <Button
-        android:id="@+id/newsButton"
+        android:id="@+id/lakeLevelButton"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginStart="220dp"
         android:layout_marginTop="550dp"
-        android:text="Historical Data" />
+        android:text="LAKE LEVEL" />
 
 
     <TextView
@@ -94,5 +87,7 @@
         android:layout_marginBottom="20dp"
         android:text="Developed by Night-fury0"
         android:textAlignment="center" />
+
+
 
 </RelativeLayout>
