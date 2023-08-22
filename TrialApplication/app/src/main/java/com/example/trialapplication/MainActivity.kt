@@ -2,7 +2,9 @@ package com.example.trialapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 
 class MainActivity : ComponentActivity() {
@@ -10,6 +12,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.primary);
+        val developerTextView = findViewById<TextView>(R.id.developerTextView)
+        developerTextView.movementMethod = LinkMovementMethod.getInstance()
         val weatherButton = findViewById<Button>(R.id.weatherButton);
         val radarButton = findViewById<Button>(R.id.radarButton);
         val satelliteButton = findViewById<Button>(R.id.satelliteButton);

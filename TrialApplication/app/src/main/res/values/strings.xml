@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Chennai Weather</string>
+    <string name="developer_name">Developed by <a href="https://github.com/Night-fury0/">Night-fury0</a></string>
 </resources>
