@@ -27,24 +27,39 @@ class LakeLevel : AppCompatActivity() {
 
         val table: String
         val updatedDate: String
-
-        withContext(Dispatchers.IO) {
-            val url = "https://cmwssb.tn.gov.in/lake-level"
-            val client = HttpClient(CIO)
-            val response: HttpResponse = client.request(url) {
-                method = HttpMethod.Get
+        try {
+            withContext(Dispatchers.IO) {
+                val url = "https://cmwssb.tn.gov.in/lake-level"
+                val client = HttpClient(CIO)
+                val response: HttpResponse = client.request(url) {
+                    method = HttpMethod.Get
+                }
+                val doc: Document = Jsoup.parse(response.bodyAsText());
+                val tableElement: Element =
+                    doc.getElementsByClass("lack-view table table-responsive table-striped table-bordered")[0];
+                tableElement.attr("border", "2")
+                table = tableElement.outerHtml();
+                updatedDate =
+                    doc.getElementsByAttributeValue("style", "font-size: 18px;")[0].text();
             }
-            val doc: Document = Jsoup.parse(response.bodyAsText());
-            val tableElement: Element = doc.getElementsByClass("lack-view table table-responsive table-striped table-bordered")[0];
-            tableElement.attr("border","2")
-            table = tableElement.outerHtml();
-            updatedDate = doc.getElementsByAttributeValue("style", "font-size: 18px;")[0].text();
+            withContext(Dispatchers.Main) {
+                val webView = findViewById<WebView>(R.id.webView)
+                val updatedTextView = findViewById<TextView>(R.id.updatedTextView)
+                webView.loadData(table, "text/html; charset=utf-8", "UTF-8")
+                updatedTextView.text = updatedDate
+            }
         }
-        withContext(Dispatchers.Main) {
-            val webView = findViewById<WebView>(R.id.webView)
-            val updatedTextView = findViewById<TextView>(R.id.updatedTextView)
-            webView.loadData(table, "text/html; charset=utf-8", "UTF-8")
-            updatedTextView.text = updatedDate
+        catch(e:java.nio.channels.UnresolvedAddressException){
+            withContext(Dispatchers.Main){
+                val failedMessage = "Check your Internet Connection."
+                findViewById<TextView>(R.id.updatedTextView).text = failedMessage
+            }
+        }
+        catch(e:Exception){
+            withContext(Dispatchers.Main){
+                val failedMessage = "Failed to load data."
+                findViewById<TextView>(R.id.updatedTextView).text = failedMessage
+            }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {

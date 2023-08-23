@@ -57,92 +57,141 @@ class Weather : ComponentActivity() {
     private suspend fun retrieveData(){
         val resp: Response
         val response: HttpResponse
-        withContext(Dispatchers.IO) {
-            val url =
-                "https://api.open-meteo.com/v1/forecast?latitude=13.0878&longitude=80.2785&timezone=auto&current_weather=true&daily=sunrise,sunset,uv_index_max,uv_index_clear_sky_max,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant,temperature_2m_max,temperature_2m_min&forecast_days=3"
-            response = HttpClient(CIO).request(url) {
-                method = HttpMethod.Get
+        try {
+            withContext(Dispatchers.IO) {
+                val url =
+                    "https://api.open-meteo.com/v1/forecast?" +
+                            "latitude=13.0878&" +
+                            "longitude=80.2785&" +
+                            "timezone=auto&" +
+                            "current_weather=true&" +
+                            "daily=sunrise,sunset,uv_index_max,uv_index_clear_sky_max," +
+                            "precipitation_sum,windspeed_10m_max,windgusts_10m_max," +
+                            "winddirection_10m_dominant,temperature_2m_max,temperature_2m_min&" +
+                            "forecast_days=3"
+                response = HttpClient(CIO).request(url) {
+                    method = HttpMethod.Get
+                }
+                resp = Gson().fromJson(response.bodyAsText(), Response::class.java)
             }
-            resp = Gson().fromJson(response.bodyAsText(), Response::class.java)
+            withContext(Dispatchers.Main) {
+                // Current Weather
+                val temperature = findViewById<TextView>(R.id.temperature)
+                val windSpeed = findViewById<TextView>(R.id.windSpeed)
+                val windDirection = findViewById<TextView>(R.id.windDirection)
+                val weatherCode = findViewById<TextView>(R.id.weatherCode)
+                val isDay = findViewById<TextView>(R.id.isDay)
+                val updatedTime = findViewById<TextView>(R.id.updatedTime)
+                temperature.text = resp.current_weather.temperature.toString()
+                windSpeed.text = resp.current_weather.windspeed.toString()
+                windDirection.text = resp.current_weather.winddirection.toString()
+
+                // Get Weather Status from Weather Code
+                weatherCode.text = checkWeatherCode(resp.current_weather.weathercode)
+
+                // Convert 1/0 to Yes/No
+                val yesString = "Yes"
+                val noString = "No"
+                if (resp.current_weather.is_day == 1)
+                    isDay.text = yesString
+                else
+                    isDay.text = noString
+
+                updatedTime.text = resp.current_weather.time.replace("T", ", ")
+                val currentWeatherTextView = findViewById<TextView>(R.id.currentWeatherTextView)
+                val currentWeatherContent =
+                    findViewById<HorizontalScrollView>(R.id.currentWeatherContent)
+                currentWeatherTextView.visibility = View.INVISIBLE
+                currentWeatherContent.visibility = View.VISIBLE
+
+                // Forecast
+                findViewById<TextView>(R.id.temperatureMaxValue1).text =
+                    resp.daily.temperature_2m_max[0].toString()
+                findViewById<TextView>(R.id.temperatureMaxValue2).text =
+                    resp.daily.temperature_2m_max[1].toString()
+                findViewById<TextView>(R.id.temperatureMaxValue3).text =
+                    resp.daily.temperature_2m_max[2].toString()
+
+                findViewById<TextView>(R.id.temperatureMinValue1).text =
+                    resp.daily.temperature_2m_min[0].toString()
+                findViewById<TextView>(R.id.temperatureMinValue2).text =
+                    resp.daily.temperature_2m_min[1].toString()
+                findViewById<TextView>(R.id.temperatureMinValue3).text =
+                    resp.daily.temperature_2m_min[2].toString()
+
+                findViewById<TextView>(R.id.sunriseValue1).text =
+                    resp.daily.sunrise[0].split("T")[1]
+                findViewById<TextView>(R.id.sunriseValue2).text =
+                    resp.daily.sunrise[1].split("T")[1]
+                findViewById<TextView>(R.id.sunriseValue3).text =
+                    resp.daily.sunrise[2].split("T")[1]
+
+                findViewById<TextView>(R.id.sunsetValue1).text = resp.daily.sunset[0].split("T")[1]
+                findViewById<TextView>(R.id.sunsetValue2).text = resp.daily.sunset[1].split("T")[1]
+                findViewById<TextView>(R.id.sunsetValue3).text = resp.daily.sunset[2].split("T")[1]
+
+                findViewById<TextView>(R.id.windSpeedValue1).text =
+                    resp.daily.windspeed_10m_max[0].toString()
+                findViewById<TextView>(R.id.windSpeedValue2).text =
+                    resp.daily.windspeed_10m_max[1].toString()
+                findViewById<TextView>(R.id.windSpeedValue3).text =
+                    resp.daily.windspeed_10m_max[2].toString()
+
+                findViewById<TextView>(R.id.windGustsValue1).text =
+                    resp.daily.windgusts_10m_max[0].toString()
+                findViewById<TextView>(R.id.windGustsValue2).text =
+                    resp.daily.windgusts_10m_max[1].toString()
+                findViewById<TextView>(R.id.windGustsValue3).text =
+                    resp.daily.windgusts_10m_max[2].toString()
+
+                findViewById<TextView>(R.id.windDirectionValue1).text =
+                    resp.daily.winddirection_10m_dominant[0].toString()
+                findViewById<TextView>(R.id.windDirectionValue2).text =
+                    resp.daily.winddirection_10m_dominant[1].toString()
+                findViewById<TextView>(R.id.windDirectionValue3).text =
+                    resp.daily.winddirection_10m_dominant[2].toString()
+
+                findViewById<TextView>(R.id.precipitationValue1).text =
+                    resp.daily.precipitation_sum[0].toString()
+                findViewById<TextView>(R.id.precipitationValue2).text =
+                    resp.daily.precipitation_sum[1].toString()
+                findViewById<TextView>(R.id.precipitationValue3).text =
+                    resp.daily.precipitation_sum[2].toString()
+
+                findViewById<TextView>(R.id.uvIndexClearSkyMaxValue1).text =
+                    resp.daily.uv_index_clear_sky_max[0].toString()
+                findViewById<TextView>(R.id.uvIndexClearSkyMaxValue2).text =
+                    resp.daily.uv_index_clear_sky_max[1].toString()
+                findViewById<TextView>(R.id.uvIndexClearSkyMaxValue3).text =
+                    resp.daily.uv_index_clear_sky_max[2].toString()
+
+                findViewById<TextView>(R.id.uvIndexMaxValue1).text =
+                    resp.daily.uv_index_max[0].toString()
+                findViewById<TextView>(R.id.uvIndexMaxValue2).text =
+                    resp.daily.uv_index_max[1].toString()
+                findViewById<TextView>(R.id.uvIndexMaxValue3).text =
+                    resp.daily.uv_index_max[2].toString()
+
+                findViewById<TextView>(R.id.dayValue1).text = resp.daily.time[0]
+                findViewById<TextView>(R.id.dayValue2).text = resp.daily.time[1]
+                findViewById<TextView>(R.id.dayValue3).text = resp.daily.time[2]
+
+                findViewById<TextView>(R.id.forecastTextView).visibility = View.INVISIBLE
+                findViewById<TableLayout>(R.id.forecastContent).visibility = View.VISIBLE
+            }
+        }catch (e:java.nio.channels.UnresolvedAddressException){
+            withContext(Dispatchers.Main){
+                val failedMessage = "Check your Internet Connection."
+                findViewById<TextView>(R.id.currentWeatherTextView).text = failedMessage
+                findViewById<TextView>(R.id.forecastTextView).text = failedMessage
+            }
         }
-        withContext(Dispatchers.Main) {
-            // Current Weather
-            val temperature = findViewById<TextView>(R.id.temperature)
-            val windSpeed = findViewById<TextView>(R.id.windSpeed)
-            val windDirection = findViewById<TextView>(R.id.windDirection)
-            val weatherCode = findViewById<TextView>(R.id.weatherCode)
-            val isDay = findViewById<TextView>(R.id.isDay)
-            val updatedTime = findViewById<TextView>(R.id.updatedTime)
-            temperature.text = resp.current_weather.temperature.toString()
-            windSpeed.text = resp.current_weather.windspeed.toString()
-            windDirection.text = resp.current_weather.winddirection.toString()
-
-            // Get Weather Status from Weather Code
-            weatherCode.text = checkWeatherCode(resp.current_weather.weathercode)
-
-            // Convert 1/0 to Yes/No
-            val yesString = "Yes"
-            val noString = "No"
-            if (resp.current_weather.is_day == 1)
-                isDay.text = yesString
-            else
-                isDay.text = noString
-
-            updatedTime.text = resp.current_weather.time.replace("T",", ")
-            val currentWeatherTextView = findViewById<TextView>(R.id.currentWeatherTextView)
-            val currentWeatherContent = findViewById<HorizontalScrollView>(R.id.currentWeatherContent)
-            currentWeatherTextView.visibility= View.INVISIBLE
-            currentWeatherContent.visibility= View.VISIBLE
-
-            // Forecast
-            findViewById<TextView>(R.id.temperatureMaxValue1).text = resp.daily.temperature_2m_max[0].toString()
-            findViewById<TextView>(R.id.temperatureMaxValue2).text = resp.daily.temperature_2m_max[1].toString()
-            findViewById<TextView>(R.id.temperatureMaxValue3).text = resp.daily.temperature_2m_max[2].toString()
-
-            findViewById<TextView>(R.id.temperatureMinValue1).text = resp.daily.temperature_2m_min[0].toString()
-            findViewById<TextView>(R.id.temperatureMinValue2).text = resp.daily.temperature_2m_min[1].toString()
-            findViewById<TextView>(R.id.temperatureMinValue3).text = resp.daily.temperature_2m_min[2].toString()
-
-            findViewById<TextView>(R.id.sunriseValue1).text = resp.daily.sunrise[0].split("T")[1]
-            findViewById<TextView>(R.id.sunriseValue2).text = resp.daily.sunrise[1].split("T")[1]
-            findViewById<TextView>(R.id.sunriseValue3).text = resp.daily.sunrise[2].split("T")[1]
-
-            findViewById<TextView>(R.id.sunsetValue1).text = resp.daily.sunset[0].split("T")[1]
-            findViewById<TextView>(R.id.sunsetValue2).text = resp.daily.sunset[1].split("T")[1]
-            findViewById<TextView>(R.id.sunsetValue3).text = resp.daily.sunset[2].split("T")[1]
-
-            findViewById<TextView>(R.id.windSpeedValue1).text = resp.daily.windspeed_10m_max[0].toString()
-            findViewById<TextView>(R.id.windSpeedValue2).text = resp.daily.windspeed_10m_max[1].toString()
-            findViewById<TextView>(R.id.windSpeedValue3).text = resp.daily.windspeed_10m_max[2].toString()
-
-            findViewById<TextView>(R.id.windGustsValue1).text = resp.daily.windgusts_10m_max[0].toString()
-            findViewById<TextView>(R.id.windGustsValue2).text = resp.daily.windgusts_10m_max[1].toString()
-            findViewById<TextView>(R.id.windGustsValue3).text = resp.daily.windgusts_10m_max[2].toString()
-
-            findViewById<TextView>(R.id.windDirectionValue1).text = resp.daily.winddirection_10m_dominant[0].toString()
-            findViewById<TextView>(R.id.windDirectionValue2).text = resp.daily.winddirection_10m_dominant[1].toString()
-            findViewById<TextView>(R.id.windDirectionValue3).text = resp.daily.winddirection_10m_dominant[2].toString()
-
-            findViewById<TextView>(R.id.precipitationValue1).text = resp.daily.precipitation_sum[0].toString()
-            findViewById<TextView>(R.id.precipitationValue2).text = resp.daily.precipitation_sum[1].toString()
-            findViewById<TextView>(R.id.precipitationValue3).text = resp.daily.precipitation_sum[2].toString()
-
-            findViewById<TextView>(R.id.uvIndexClearSkyMaxValue1).text = resp.daily.uv_index_clear_sky_max[0].toString()
-            findViewById<TextView>(R.id.uvIndexClearSkyMaxValue2).text = resp.daily.uv_index_clear_sky_max[1].toString()
-            findViewById<TextView>(R.id.uvIndexClearSkyMaxValue3).text = resp.daily.uv_index_clear_sky_max[2].toString()
-
-            findViewById<TextView>(R.id.uvIndexMaxValue1).text = resp.daily.uv_index_max[0].toString()
-            findViewById<TextView>(R.id.uvIndexMaxValue2).text = resp.daily.uv_index_max[1].toString()
-            findViewById<TextView>(R.id.uvIndexMaxValue3).text = resp.daily.uv_index_max[2].toString()
-
-            findViewById<TextView>(R.id.dayValue1).text = resp.daily.time[0]
-            findViewById<TextView>(R.id.dayValue2).text = resp.daily.time[1]
-            findViewById<TextView>(R.id.dayValue3).text = resp.daily.time[2]
-
-            val forecastTextView = findViewById<TextView>(R.id.forecastTextView)
-            val forecastContent = findViewById<TableLayout>(R.id.forecastContent)
-            forecastTextView.visibility = View.INVISIBLE
-            forecastContent.visibility = View.VISIBLE
+        catch (e:Exception){
+            withContext(Dispatchers.Main){
+                val failedMessage = "Failed to load d ata."
+                findViewById<TextView>(R.id.currentWeatherTextView).text = failedMessage
+                findViewById<TextView>(R.id.forecastTextView).text = failedMessage
+            }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {

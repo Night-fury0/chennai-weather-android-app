@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Satellite">
+
+    <TextView
+        android:id="@+id/satelliteHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/satellite_heading"/>
+
+    <ImageView
+        android:id="@+id/satellite1"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_below="@+id/satelliteHeading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+
+        android:layout_marginEnd="20dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <Button
+        android:id="@+id/wvButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/satellite1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Water Vapour" />
+
+    <Button
+        android:id="@+id/visButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/wvButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Visible" />
+
+    <Button
+        android:id="@+id/irlButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/visButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Infrared-1" />
+
+    <Button
+        android:id="@+id/ctbtButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/irlButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Cloud Top Brightness Temp" />
+
+</RelativeLayout>
