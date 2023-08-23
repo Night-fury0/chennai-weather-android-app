@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:textSize="18sp"
-        android:text="LAKE LEVEL"/>
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/lake_level_heading"/>
 
     <WebView
         android:id="@+id/webView"
@@ -30,6 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
+        android:textSize="15sp"
         android:text="Loading..." />
 
 

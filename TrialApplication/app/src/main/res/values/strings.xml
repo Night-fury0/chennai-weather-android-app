@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Chennai Weather</string>
+    <string name="app_name_uppercase">CHENNAI WEATHER</string>
     <string name="developer_name">Developed by <a href="https://github.com/Night-fury0/">Night-fury0</a></string>
+    <string name="radar_heading">RADAR</string>
+    <string name="current_weather_heading">CURRENT WEATHER</string>
+    <string name="forecast_heading">FORECAST</string>
+    <string name="satellite_heading">SATELLITE</string>
+    <string name="lake_level_heading">LAKE LEVEL</string>
+    <string name="loading_text">Loading…</string>
 </resources>

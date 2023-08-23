@@ -21,7 +21,7 @@
         android:textSize="30sp"
         android:fontFamily="sans-serif-black"
         android:textStyle="bold"
-        android:text="CHENNAI WEATHER"/>
+        android:text="@string/app_name_uppercase"/>
 
     <ImageView
         android:id="@+id/imageView"

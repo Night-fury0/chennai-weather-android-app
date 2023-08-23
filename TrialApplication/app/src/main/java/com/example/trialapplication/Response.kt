@@ -3,7 +3,7 @@ package com.example.trialapplication
 data class Response(
 	val latitude: Double,
 	val longitude: Double,
-	val generationtime_ms: Double,
+	val generationTime: Double,
 	val timezone: String,
 	val elevation: Double,
 	val current_weather: CurrentWeather,
