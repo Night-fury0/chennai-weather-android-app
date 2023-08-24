@@ -7,54 +7,65 @@
     tools:context=".Satellite">
 
     <TextView
+        android:id="@+id/satelliteHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:text="@string/satellite_heading"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="@string/satellite_heading"/>
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/satellite1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/satelliteHeader"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
+
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="320dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <Button
-        android:id="@+id/wvButton"
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/satellite1"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500dp"
-        android:text="Water Vapour" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp">
 
-    <Button
-        android:id="@+id/visButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="550dp"
-        android:text="Visible" />
+        <Button
+            android:id="@+id/wvButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Water Vapour" />
 
-    <Button
-        android:id="@+id/irlButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="600dp"
-        android:text="Infrared-1" />
+        <Button
+            android:id="@+id/visButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Visible" />
 
-    <Button
-        android:id="@+id/ctbtButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="650dp"
-        android:text="Cloud Top Brightness Temp" />
+        <Button
+            android:id="@+id/irlButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Infrared-1" />
+
+        <Button
+            android:id="@+id/ctbtButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Cloud Top Brightness Temp" />
+
+    </TableLayout>
 
 </RelativeLayout>

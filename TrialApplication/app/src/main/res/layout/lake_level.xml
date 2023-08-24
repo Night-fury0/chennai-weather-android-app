@@ -8,21 +8,28 @@
 
 
     <TextView
+        android:id="@+id/lakeLevelHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:text="@string/lake_level_heading"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="@string/lake_level_heading"/>
+        android:textStyle="bold" />
 
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="240dp"
-        android:layout_marginTop="80dp"
-        android:scrollbars="none"/>
+        android:layout_above="@+id/updatedTextView"
+        android:layout_below="@+id/lakeLevelHeader"
+        android:layout_marginStart="20dp"
+        android:background="@color/cardview_dark_background"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
+        android:scrollbars="none" />
 
     <TextView
         android:id="@+id/updatedTextView"
@@ -30,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="30dp"
         android:textSize="15sp"
         android:text="Loading..." />
 

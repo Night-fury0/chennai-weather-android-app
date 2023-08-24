@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.primary);
+        setContentView(R.layout.main_layout);
         val developerTextView = findViewById<TextView>(R.id.developerTextView)
         developerTextView.movementMethod = LinkMovementMethod.getInstance()
         val weatherButton = findViewById<Button>(R.id.weatherButton);
