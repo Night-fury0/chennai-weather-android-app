@@ -15,9 +15,15 @@
         android:theme="@style/Theme.TrialApplication"
         tools:targetApi="31">
         <activity
-            android:name=".LakeLevel"
-            android:theme="@style/Theme.AppCompat"
+            android:name=".Rainfall"
             android:exported="false" />
+        <activity
+            android:name=".Stations"
+            android:exported="false" />
+        <activity
+            android:name=".LakeLevel"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".Satellite"
             android:exported="false"

@@ -11,9 +11,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.request
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.bodyAsText
+//import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpMethod
 import com.google.gson.Gson
+import io.ktor.client.statement.readText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -58,6 +59,7 @@ class Weather : ComponentActivity() {
         val resp: Response
         val response: HttpResponse
         try {
+            println("Successful till here@!@")
             withContext(Dispatchers.IO) {
                 val url =
                     "https://api.open-meteo.com/v1/forecast?" +
@@ -72,8 +74,10 @@ class Weather : ComponentActivity() {
                 response = HttpClient(CIO).request(url) {
                     method = HttpMethod.Get
                 }
-                resp = Gson().fromJson(response.bodyAsText(), Response::class.java)
+                resp = Gson().fromJson(response.readText(), Response::class.java)
+//                resp = Gson().fromJson(response.bodyAsText(), Response::class.java)
             }
+            println("Successful till here too@!@")
             withContext(Dispatchers.Main) {
                 // Current Weather
                 val temperature = findViewById<TextView>(R.id.temperature)
@@ -178,6 +182,7 @@ class Weather : ComponentActivity() {
 
                 findViewById<TextView>(R.id.forecastTextView).visibility = View.INVISIBLE
                 findViewById<TableLayout>(R.id.forecastContent).visibility = View.VISIBLE
+                println("not here though@!@")
             }
         }catch (e:java.nio.channels.UnresolvedAddressException){
             withContext(Dispatchers.Main){
@@ -188,7 +193,10 @@ class Weather : ComponentActivity() {
         }
         catch (e:Exception){
             withContext(Dispatchers.Main){
-                val failedMessage = "Failed to load d ata."
+                val failedMessage = "Failed to load data."
+                println("Exception !@!@!")
+                println(e.message)
+                println(e)
                 findViewById<TextView>(R.id.currentWeatherTextView).text = failedMessage
                 findViewById<TextView>(R.id.forecastTextView).text = failedMessage
             }

@@ -26,7 +26,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
 
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -37,35 +37,42 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp">
+        android:stretchColumns="*"
+        android:layout_marginBottom="10dp">
 
-        <Button
-            android:id="@+id/wvButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Water Vapour" />
+        <TableRow android:layout_weight="1">
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/wvButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Water Vapour" />
 
-        <Button
-            android:id="@+id/visButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Visible" />
+            <Button
+                android:id="@+id/visButton"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Visible" />
+        </TableRow>
+        <TableRow android:layout_weight="1">
+            <Button
+                android:id="@+id/irlButton"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Infrared-1" />
 
-        <Button
-            android:id="@+id/irlButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Infrared-1" />
-
-        <Button
-            android:id="@+id/ctbtButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Cloud Top Brightness Temp" />
-
+            <Button
+                android:id="@+id/ctbtButton"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:text="Cloud Top\nBrightness Temp" />
+        </TableRow>
     </TableLayout>
 
 </RelativeLayout>
