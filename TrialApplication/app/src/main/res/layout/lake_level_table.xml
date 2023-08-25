@@ -19,6 +19,7 @@
         android:textStyle="bold" />
 
     <HorizontalScrollView
+        android:id="@+id/lakeLevelContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/lakeLevelHeader"
@@ -26,18 +27,24 @@
         android:layout_above="@id/updatedTextView"
         android:layout_marginBottom="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+        android:layout_marginEnd="20dp"
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/black">
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                android:layout_marginStart="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
                 android:stretchColumns="*">
-                <TableRow android:layout_weight="1" android:background="@color/grey" >
+
+                <TableRow android:layout_weight="1" android:background="@color/black" >
                 <TextView
                     android:id="@+id/tableHeader1"
                     android:layout_weight="1"
@@ -48,6 +55,11 @@
                     android:textStyle="bold"
                     android:gravity="center"
                     android:textAlignment="textStart"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="RESERVOIR"/>
                 <TextView
                     android:id="@+id/tableHeader2"
@@ -59,6 +71,11 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Full\nTank\nLevel\n(ft)"/>
                 <TextView
                     android:id="@+id/tableHeader3"
@@ -70,6 +87,11 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Full\nCapacity\n(mcft)"/>
                 <TextView
                     android:id="@+id/tableHeader4"
@@ -81,6 +103,11 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Level\n(ft)"/>
                 <TextView
                     android:id="@+id/tableHeader5"
@@ -92,6 +119,11 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Storage\n(mcft)"/>
                 <TextView
                     android:id="@+id/tableHeader6"
@@ -103,6 +135,11 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Storage\nLevel\n(%)"/>
                 <TextView
                     android:id="@+id/tableHeader7"
@@ -114,6 +151,11 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Inflow\n(cusecs)"/>
                 <TextView
                     android:id="@+id/tableHeader8"
@@ -125,6 +167,11 @@
                     android:padding="5dp"
                     android:gravity="center"
                     android:textAlignment="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Outflow\n(cusecs)"/>
                 <TextView
                     android:id="@+id/tableHeader9"
@@ -136,6 +183,11 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Rainfall\n(mm)"/>
                 <TextView
                     android:id="@+id/tableHeader10"
@@ -147,9 +199,14 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:gravity="center"
+                    android:background="@color/grey"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="1dp"
                     android:text="Storage\nas on\nsame\nday last\nyear\n(mcft)"/>
             </TableRow>
-                <TableRow android:layout_weight="1" android:background="@color/light_grey">
+                <TableRow android:layout_weight="1" android:background="@color/black">
                  <TextView
                      android:id="@+id/lake1Value1"
                      android:layout_width="match_parent"
@@ -160,6 +217,10 @@
                      android:background="@color/grey"
                      android:gravity="center"
                      android:textAlignment="textStart"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value2"
@@ -169,6 +230,11 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value3"
@@ -178,6 +244,11 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value4"
@@ -187,6 +258,11 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value5"
@@ -196,6 +272,11 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value6"
@@ -205,6 +286,11 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value7"
@@ -214,6 +300,11 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value8"
@@ -223,6 +314,11 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value9"
@@ -232,6 +328,11 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
                  <TextView
                      android:id="@+id/lake1Value10"
@@ -241,9 +342,14 @@
                      android:padding="5dp"
                      android:textAlignment="center"
                      android:gravity="center"
+                     android:background="@color/light_grey"
+                     android:layout_marginStart="1dp"
+                     android:layout_marginEnd="1dp"
+                     android:layout_marginBottom="1dp"
+                     android:layout_marginTop="1dp"
                      android:layout_weight="1"/>
              </TableRow>
-                <TableRow android:layout_weight="1" android:background="@color/light_grey">
+                <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
                         android:id="@+id/lake2Value1"
                         android:layout_width="match_parent"
@@ -254,6 +360,10 @@
                         android:background="@color/grey"
                         android:gravity="center"
                         android:textAlignment="textStart"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value2"
@@ -263,6 +373,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value3"
@@ -272,6 +387,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value4"
@@ -281,6 +401,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value5"
@@ -290,6 +415,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value6"
@@ -299,6 +429,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value7"
@@ -308,6 +443,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value8"
@@ -317,6 +457,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value9"
@@ -326,6 +471,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake2Value10"
@@ -335,9 +485,14 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                 </TableRow>
-                <TableRow android:layout_weight="1" android:background="@color/light_grey">
+                <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
                         android:id="@+id/lake3Value1"
                         android:layout_width="match_parent"
@@ -348,6 +503,10 @@
                         android:background="@color/grey"
                         android:gravity="center"
                         android:textAlignment="textStart"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value2"
@@ -357,6 +516,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value3"
@@ -366,6 +530,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value4"
@@ -375,6 +544,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value5"
@@ -384,6 +558,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value6"
@@ -393,6 +572,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value7"
@@ -402,6 +586,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value8"
@@ -411,6 +600,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value9"
@@ -420,6 +614,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake3Value10"
@@ -429,9 +628,14 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                 </TableRow>
-                <TableRow android:layout_weight="1" android:background="@color/light_grey">
+                <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
                         android:id="@+id/lake4Value1"
                         android:layout_width="match_parent"
@@ -442,6 +646,10 @@
                         android:background="@color/grey"
                         android:gravity="center"
                         android:textAlignment="textStart"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value2"
@@ -451,6 +659,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value3"
@@ -460,6 +673,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value4"
@@ -469,6 +687,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value5"
@@ -478,6 +701,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value6"
@@ -487,6 +715,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value7"
@@ -496,6 +729,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value8"
@@ -505,6 +743,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value9"
@@ -514,6 +757,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake4Value10"
@@ -523,9 +771,14 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/light_grey"
                         android:layout_weight="1"/>
                 </TableRow>
-                <TableRow android:layout_weight="1" android:background="@color/light_grey">
+                <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
                         android:id="@+id/lake5Value1"
                         android:layout_width="match_parent"
@@ -533,9 +786,13 @@
                         android:textSize="15sp"
                         android:padding="5dp"
                         android:textStyle="bold"
-                        android:background="@color/grey"
+                    	android:background="@color/grey"
                         android:gravity="center"
                         android:textAlignment="textStart"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value2"
@@ -545,6 +802,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value3"
@@ -554,6 +816,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value4"
@@ -563,6 +830,11 @@
                         android:textSize="15sp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value5"
@@ -572,6 +844,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value6"
@@ -581,6 +858,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value7"
@@ -590,6 +872,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value8"
@@ -599,6 +886,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value9"
@@ -608,6 +900,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake5Value10"
@@ -617,9 +914,14 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                    	android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                 </TableRow>
-                <TableRow android:layout_weight="1" android:background="@color/light_grey">
+                <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
                         android:id="@+id/lake6Value1"
                         android:layout_width="match_parent"
@@ -630,6 +932,10 @@
                         android:background="@color/grey"
                         android:gravity="center"
                         android:textAlignment="textStart"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake6Value2"
@@ -637,6 +943,11 @@
                         android:layout_height="match_parent"
                         android:textSize="15sp"
                         android:padding="5dp"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:layout_weight="1"/>
@@ -646,6 +957,11 @@
                         android:layout_height="match_parent"
                         android:textSize="15sp"
                         android:padding="5dp"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:layout_weight="1"/>
@@ -657,6 +973,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake6Value5"
@@ -666,6 +987,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake6Value6"
@@ -675,6 +1001,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake6Value7"
@@ -684,6 +1015,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake6Value8"
@@ -693,6 +1029,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake6Value9"
@@ -702,6 +1043,11 @@
                         android:padding="5dp"
                         android:gravity="center"
                         android:textAlignment="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/lake6Value10"
@@ -711,103 +1057,14 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                 </TableRow>
-                <TableRow android:layout_weight="1" android:background="@color/light_grey">
-                    <TextView
-                        android:id="@+id/lake7Value1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textStyle="bold"
-                        android:background="@color/grey"
-                        android:gravity="center"
-                        android:textAlignment="textStart"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value7"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value8"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value9"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                    <TextView
-                        android:id="@+id/lake7Value10"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="15sp"
-                        android:padding="5dp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:layout_weight="1"/>
-                </TableRow>
-                <TableRow android:layout_weight="1" android:background="@color/light_grey">
+                <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
                         android:id="@+id/totalValue1"
                         android:layout_width="match_parent"
@@ -816,6 +1073,10 @@
                         android:padding="5dp"
                         android:textStyle="bold"
                         android:background="@color/grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:gravity="center"
                         android:textAlignment="textStart"
                         android:layout_weight="1"/>
@@ -827,6 +1088,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/totalValue3"
@@ -835,6 +1101,11 @@
                         android:textSize="15sp"
                         android:padding="5dp"
                         android:textAlignment="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:gravity="center"
                         android:layout_weight="1"/>
                     <TextView
@@ -845,6 +1116,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/totalValue5"
@@ -854,6 +1130,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/totalValue6"
@@ -863,6 +1144,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/totalValue7"
@@ -872,6 +1158,11 @@
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:layout_weight="1"/>
                     <TextView
                         android:id="@+id/totalValue8"
@@ -879,6 +1170,11 @@
                         android:layout_height="match_parent"
                         android:textSize="15sp"
                         android:padding="5dp"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:textAlignment="center"
                         android:gravity="center"
                         android:layout_weight="1"/>
@@ -887,6 +1183,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textSize="15sp"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:padding="5dp"
                         android:textAlignment="center"
                         android:gravity="center"
@@ -898,6 +1199,11 @@
                         android:padding="5dp"
                         android:textSize="15sp"
                         android:textAlignment="center"
+                        android:background="@color/light_grey"
+	                    android:layout_marginStart="1dp"
+	                    android:layout_marginEnd="1dp"
+	                    android:layout_marginBottom="1dp"
+	                    android:layout_marginTop="1dp"
                         android:gravity="center"
                         android:layout_weight="1"/>
                 </TableRow>

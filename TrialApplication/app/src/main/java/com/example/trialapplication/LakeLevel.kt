@@ -1,7 +1,9 @@
 package com.example.trialapplication
 
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebView
+import android.widget.HorizontalScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -125,6 +127,7 @@ class LakeLevel : AppCompatActivity() {
                 findViewById<TextView>(R.id.totalValue10).text = values[69].text()
 //                webView.loadData(table, "text/html; charset=utf-8", "UTF-8")
                 findViewById<TextView>(R.id.updatedTextView).text = updatedDate
+                findViewById<HorizontalScrollView>(R.id.lakeLevelContent).visibility = View.VISIBLE
             }
         }
         catch(e:java.nio.channels.UnresolvedAddressException){

@@ -181,7 +181,7 @@ class Weather : ComponentActivity() {
                 findViewById<TextView>(R.id.dayValue3).text = resp.daily.time[2]
 
                 findViewById<TextView>(R.id.forecastTextView).visibility = View.INVISIBLE
-                findViewById<TableLayout>(R.id.forecastContent).visibility = View.VISIBLE
+                findViewById<HorizontalScrollView>(R.id.forecastContent).visibility = View.VISIBLE
                 println("not here though@!@")
             }
         }catch (e:java.nio.channels.UnresolvedAddressException){
@@ -204,7 +204,7 @@ class Weather : ComponentActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.weather1)
+        setContentView(R.layout.weather)
         lifecycleScope.launch{
             retrieveData()
         }

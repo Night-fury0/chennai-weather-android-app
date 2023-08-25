@@ -71,12 +71,12 @@
                 android:layout_height="match_parent"
                 android:text="Weather" />
 
-            <Button
-                android:layout_weight="1"
-                android:id="@+id/weatherStationsButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Stations" />
+<!--            <Button-->
+<!--                android:layout_weight="1"-->
+<!--                android:id="@+id/weatherStationsButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Stations" />-->
 
             <Button
                 android:layout_weight="1"
@@ -95,12 +95,12 @@
                 android:layout_height="match_parent"
                 android:text="SATELLITE" />
 
-            <Button
-                android:layout_weight="1"
-                android:id="@+id/rainfallButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Rainfall" />
+<!--            <Button-->
+<!--                android:layout_weight="1"-->
+<!--                android:id="@+id/rainfallButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="Rainfall" />-->
 
             <Button
                 android:layout_weight="1"
