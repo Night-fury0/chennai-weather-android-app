@@ -11,9 +11,17 @@ class Radar : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.radar)
-        val radar1 = findViewById<ImageView>(R.id.radar1)
+
+        val radarImageView = findViewById<ImageView>(R.id.radarImageView)
+        val radar1Url = getString(R.string.radar1_url)
+        val radar2Url = getString(R.string.radar2_url)
+        val radar3Url = getString(R.string.radar3_url)
+        val radar4Url = getString(R.string.radar4_url)
+        val radar5Url = getString(R.string.radar5_url)
+        val radar6Url = getString(R.string.radar6_url)
+
         runBlocking {
-            radar1.load("https://mausam.imd.gov.in/Radar/caz_cni.gif")
+            radarImageView.load(radar1Url)
         }
         val radar1Button = findViewById<Button>(R.id.radar1Button)
         val radar2Button = findViewById<Button>(R.id.radar2Button)
@@ -24,32 +32,32 @@ class Radar : AppCompatActivity() {
 
         radar1Button.setOnClickListener {
             runBlocking {
-                radar1.load("https://mausam.imd.gov.in/Radar/caz_cni.gif")
+                radarImageView.load(radar1Url)
             }
         }
         radar2Button.setOnClickListener {
             runBlocking {
-                radar1.load("https://mausam.imd.gov.in/Radar/sri_cni.gif")
+                radarImageView.load(radar2Url)
             }
         }
         radar3Button.setOnClickListener {
             runBlocking {
-                radar1.load("https://mausam.imd.gov.in/Radar/pac_cni.gif")
+                radarImageView.load(radar3Url)
             }
         }
         radar4Button.setOnClickListener {
             runBlocking {
-                radar1.load("https://mausam.imd.gov.in/Radar/ppi_cni.gif")
+                radarImageView.load(radar4Url)
             }
         }
         radar5Button.setOnClickListener {
             runBlocking {
-                radar1.load("https://mausam.imd.gov.in/Radar/ppz_cni.gif")
+                radarImageView.load(radar5Url)
             }
         }
         radar6Button.setOnClickListener {
             runBlocking {
-                radar1.load("https://mausam.imd.gov.in/Radar/vp2_cni.gif")
+                radarImageView.load(radar6Url)
             }
         }
     }

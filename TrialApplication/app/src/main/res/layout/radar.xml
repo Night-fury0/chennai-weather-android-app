@@ -17,7 +17,7 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/radar1"
+        android:id="@+id/radarImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/radarHeader"
@@ -29,7 +29,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/radar1"
+        android:layout_below="@+id/radarImageView"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"

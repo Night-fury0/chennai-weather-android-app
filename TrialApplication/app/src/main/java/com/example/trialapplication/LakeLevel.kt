@@ -2,7 +2,7 @@ package com.example.trialapplication
 
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebView
+//import android.webkit.WebView
 import android.widget.HorizontalScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -22,16 +22,14 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
-
 class LakeLevel : AppCompatActivity() {
 
-    suspend fun retrieveData(){
-
+    private suspend fun retrieveData(){
         val values: Elements
         val updatedDate: String
         try {
             withContext(Dispatchers.IO) {
-                val url = "https://cmwssb.tn.gov.in/lake-level"
+                val url = getString(R.string.lake_level_url)
                 val client = HttpClient(CIO)
                 val response: HttpResponse = client.request(url) {
                     method = HttpMethod.Get
@@ -39,7 +37,7 @@ class LakeLevel : AppCompatActivity() {
                 val doc: Document = Jsoup.parse(response.readText());
 //                val doc: Document = Jsoup.parse(response.bodyAsText());
                 val tableElement: Element =
-                    doc.getElementsByClass("lack-view table table-responsive table-striped table-bordered")[0];
+                    doc.getElementsByClass(getString(R.string.lake_level_table_class_name))[0];
                 values = tableElement.getElementsByTag("td")
 
 //                tableElement.attr("border", "2")
@@ -132,16 +130,15 @@ class LakeLevel : AppCompatActivity() {
         }
         catch(e:java.nio.channels.UnresolvedAddressException){
             withContext(Dispatchers.Main){
-                val failedMessage = "Check your Internet Connection."
+                val failedMessage = getString(R.string.error_internet_failure)
                 findViewById<TextView>(R.id.updatedTextView).text = failedMessage
             }
         }
         catch(e:Exception){
             withContext(Dispatchers.Main){
-                val failedMessage = "Failed to load data."
+                val failedMessage = getString(R.string.error_unable_to_retrieve)
                 println("Exception !@!@!")
                 println(e.message)
-                println(e)
                 findViewById<TextView>(R.id.updatedTextView).text = failedMessage
             }
         }

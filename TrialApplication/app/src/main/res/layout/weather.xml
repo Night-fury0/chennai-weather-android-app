@@ -68,7 +68,7 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginTop="1dp"
-                        android:text="Temperature 2m (°C)"/>
+                        android:text="@string/temperature_2m_max"/>
                     <TextView
                         android:textSize="15sp"
                         android:layout_height="match_parent"
@@ -97,7 +97,7 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginTop="1dp"
-                        android:text="Wind Speed (kmph)"/>
+                        android:text="@string/wind_speed"/>
                     <TextView
                         android:textSize="15sp"
                         android:layout_height="match_parent"
@@ -126,7 +126,7 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginTop="1dp"
-                        android:text="Wind Direction (°)"/>
+                        android:text="@string/wind_direction"/>
                     <TextView
                         android:textSize="15sp"
                         android:layout_height="match_parent"
@@ -155,7 +155,7 @@
                         android:layout_marginEnd="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginTop="1dp"
-                        android:text="Weather Status"/>
+                        android:text="@string/weather_status"/>
                     <TextView
                         android:textSize="15sp"
                         android:layout_height="match_parent"
@@ -184,7 +184,7 @@
                         android:layout_marginTop="1dp"
                         android:paddingEnd="5dp"
                         android:paddingStart="5dp"
-                        android:text="Is Day"/>
+                        android:text="@string/is_day"/>
                     <TextView
                         android:textSize="15sp"
                         android:layout_height="match_parent"
@@ -272,13 +272,12 @@
                 android:layout_marginTop="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_marginStart="1dp"
-                android:layout_marginEnd="1dp"
-                >
+                android:layout_marginEnd="1dp">
 
                 <TableRow android:layout_weight="1" android:background="@color/black">
 
                     <TextView
-                        android:text="Date"
+                        android:text="@string/date"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:textSize="15sp"
@@ -291,7 +290,6 @@
                         android:layout_marginBottom="1dp"
                         android:layout_marginStart="1dp"
                         android:layout_marginEnd="1dp"
-
                         android:textStyle="bold"/>
 
                     <TextView
@@ -344,7 +342,7 @@
                 <TableRow android:layout_weight="1" android:background="@color/black">
 
                     <TextView
-                        android:text="Sunrise (HH:mm)"
+                        android:text="@string/sunrise"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:background="@color/grey"
@@ -400,7 +398,7 @@
                 <TableRow android:layout_weight="1" android:background="@color/black">
 
                     <TextView
-                        android:text="Sunset (HH:mm)"
+                        android:text="@string/sunset"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:background="@color/grey"
@@ -455,7 +453,7 @@
                 </TableRow>
                 <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
-                        android:text="UV Index Max"
+                        android:text="@string/uv_index_max"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:background="@color/grey"
@@ -511,7 +509,7 @@
                 <TableRow android:layout_weight="1" android:background="@color/black">
 
                     <TextView
-                        android:text="UV Index Clear Sky Max"
+                        android:text="@string/uv_index_clear_sky_max"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:background="@color/grey"
@@ -561,11 +559,12 @@
                         android:layout_marginTop="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_marginStart="1dp"
-                        android:layout_marginEnd="1dp"                        android:textSize="15sp" />
+                        android:layout_marginEnd="1dp"
+                        android:textSize="15sp" />
                 </TableRow>
                 <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
-                        android:text="Precipitation (mm)"
+                        android:text="@string/precipitation_sum"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:background="@color/grey"
@@ -620,7 +619,7 @@
                 </TableRow>
                 <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
-                        android:text="Wind Speed Max (kmph)"
+                        android:text="@string/wind_speed_max"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:gravity="center"
@@ -675,7 +674,7 @@
                 </TableRow>
                 <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
-                        android:text="Wind Gusts Max (kmph)"
+                        android:text="@string/wind_gusts_max"
                         android:textAlignment="textStart"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
@@ -730,7 +729,7 @@
                 </TableRow>
                 <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
-                        android:text="Wind Direction Dominant (°)"
+                        android:text="@string/wind_direction_dominant"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:background="@color/grey"
@@ -785,7 +784,7 @@
                 </TableRow>
                 <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
-                        android:text="Temperature 2m Max (°C)"
+                        android:text="@string/temperature_2m_max"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:background="@color/grey"
@@ -840,7 +839,7 @@
                 </TableRow>
                 <TableRow android:layout_weight="1" android:background="@color/black">
                     <TextView
-                        android:text="Temperature 2m Min (°C)"
+                        android:text="@string/temperature_2m_min"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:paddingStart="5dp"
@@ -910,7 +909,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
         android:maxLength="1000"
-        android:text="Loading..."
+        android:text="@string/loading_text"
         android:textSize="15sp" />
 
 

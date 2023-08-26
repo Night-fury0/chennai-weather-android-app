@@ -11,10 +11,12 @@ class Satellite : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.satellite)
+
         val satellite1 = findViewById<ImageView>(R.id.satellite1)
         runBlocking {
-            satellite1.load("https://mausam.imd.gov.in/Satellite/3Dasiasec_wv.jpg")
+            satellite1.load(getString(R.string.satellite_wv_url))
         }
+
         val wvButton = findViewById<Button>(R.id.wvButton)
         val visButton = findViewById<Button>(R.id.visButton)
         val irlButton = findViewById<Button>(R.id.irlButton)
@@ -22,25 +24,25 @@ class Satellite : AppCompatActivity() {
 
         wvButton.setOnClickListener {
             runBlocking {
-                satellite1.load("https://mausam.imd.gov.in/Satellite/3Dasiasec_wv.jpg")
+                satellite1.load(getString(R.string.satellite_wv_url))
             }
         }
 
         visButton.setOnClickListener {
             runBlocking {
-                satellite1.load("https://mausam.imd.gov.in/Satellite/3Dasiasec_vis.jpg")
+                satellite1.load(getString(R.string.satellite_vis_url))
             }
         }
 
         irlButton.setOnClickListener {
             runBlocking {
-                satellite1.load("https://mausam.imd.gov.in/Satellite/3Dasiasec_ir1.jpg")
+                satellite1.load(getString(R.string.satellite_ir1_url))
             }
         }
 
         ctbtButton.setOnClickListener {
             runBlocking {
-                satellite1.load("https://mausam.imd.gov.in/Satellite/3Dasiasec_ctbt.jpg")
+                satellite1.load(getString(R.string.satellite_ctbt_url))
             }
         }
 

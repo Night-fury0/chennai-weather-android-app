@@ -8,4 +8,46 @@
     <string name="satellite_heading">SATELLITE</string>
     <string name="lake_level_heading">LAKE LEVEL</string>
     <string name="loading_text">Loading…</string>
+
+    <string name="weather_url">https://api.open-meteo.com/v1/forecast?latitude=13.0878&amp;longitude=80.2785&amp;timezone=auto&amp;current_weather=true&amp;daily=sunrise,sunset,uv_index_max,uv_index_clear_sky_max,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant,temperature_2m_max,temperature_2m_min&amp;forecast_days=3</string>
+    <string name="yes_string">Yes</string>
+    <string name="no_string">No</string>
+
+    <string name="temperature_2m">Temperature 2m (°C)</string>
+    <string name="wind_speed">Wind Speed (kmph)</string>
+    <string name="wind_direction">Wind Direction (°)</string>
+    <string name="weather_status">Weather Status</string>
+    <string name="is_day">Is Day</string>
+
+    <string name="temperature_2m_max">Temperature 2m Max (°C)</string>
+    <string name="temperature_2m_min">Temperature 2m Min (°C)</string>
+    <string name="wind_direction_dominant">Wind Direction Dominant (°)</string>
+    <string name="wind_gusts_max">Wind Gusts Max (kmph)</string>
+    <string name="wind_speed_max">Wind Speed Max (kmph)</string>
+    <string name="precipitation_sum">Precipitation (mm)</string>
+    <string name="uv_index_clear_sky_max">UV Index Clear Sky Max</string>
+    <string name="uv_index_max">UV Index Max</string>
+    <string name="sunset">Sunset (HH:mm)</string>
+    <string name="sunrise">Sunrise (HH:mm)</string>
+    <string name="date">Date</string>
+
+    <string name="radar1_url">https://mausam.imd.gov.in/Radar/caz_cni.gif</string>
+    <string name="radar2_url">https://mausam.imd.gov.in/Radar/sri_cni.gif</string>
+    <string name="radar3_url">https://mausam.imd.gov.in/Radar/pac_cni.gif</string>
+    <string name="radar4_url">https://mausam.imd.gov.in/Radar/ppi_cni.gif</string>
+    <string name="radar5_url">https://mausam.imd.gov.in/Radar/ppz_cni.gif</string>
+    <string name="radar6_url">https://mausam.imd.gov.in/Radar/vp2_cni.gif</string>
+
+    <string name="satellite_wv_url">https://mausam.imd.gov.in/Satellite/3Dasiasec_wv.jpg</string>
+    <string name="satellite_vis_url">https://mausam.imd.gov.in/Satellite/3Dasiasec_vis.jpg</string>
+    <string name="satellite_ir1_url">https://mausam.imd.gov.in/Satellite/3Dasiasec_ir1.jpg</string>
+    <string name="satellite_ctbt_url">https://mausam.imd.gov.in/Satellite/3Dasiasec_ctbt.jpg</string>
+
+    <string name="lake_level_url">https://cmwssb.tn.gov.in/lake-level</string>
+    <string name="lake_level_table_class_name">lack-view table table-responsive table-striped table-bordered</string>
+
+    <string name="error_internet_failure">Check your Internet Connection</string>
+    <string name="error_unable_to_retrieve">Failed to load data</string>
+
+
 </resources>

@@ -3,7 +3,6 @@ package com.example.trialapplication
 import android.os.Bundle
 import android.view.View
 import android.widget.HorizontalScrollView
-import android.widget.TableLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
@@ -19,11 +18,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 class Weather : ComponentActivity() {
 
     private fun checkWeatherCode(weatherCode: Int): String{
-        var weatherStatus = "Unknown Weather"
+        var weatherStatus = "Undefined Weather"
         when (weatherCode){
             0 -> { weatherStatus = "Clear Sky"}
             1 -> { weatherStatus = "Mainly Clear"}
@@ -59,25 +57,14 @@ class Weather : ComponentActivity() {
         val resp: Response
         val response: HttpResponse
         try {
-            println("Successful till here@!@")
             withContext(Dispatchers.IO) {
-                val url =
-                    "https://api.open-meteo.com/v1/forecast?" +
-                            "latitude=13.0878&" +
-                            "longitude=80.2785&" +
-                            "timezone=auto&" +
-                            "current_weather=true&" +
-                            "daily=sunrise,sunset,uv_index_max,uv_index_clear_sky_max," +
-                            "precipitation_sum,windspeed_10m_max,windgusts_10m_max," +
-                            "winddirection_10m_dominant,temperature_2m_max,temperature_2m_min&" +
-                            "forecast_days=3"
+                val url = getString(R.string.weather_url)
                 response = HttpClient(CIO).request(url) {
                     method = HttpMethod.Get
                 }
                 resp = Gson().fromJson(response.readText(), Response::class.java)
 //                resp = Gson().fromJson(response.bodyAsText(), Response::class.java)
             }
-            println("Successful till here too@!@")
             withContext(Dispatchers.Main) {
                 // Current Weather
                 val temperature = findViewById<TextView>(R.id.temperature)
@@ -94,12 +81,10 @@ class Weather : ComponentActivity() {
                 weatherCode.text = checkWeatherCode(resp.current_weather.weathercode)
 
                 // Convert 1/0 to Yes/No
-                val yesString = "Yes"
-                val noString = "No"
                 if (resp.current_weather.is_day == 1)
-                    isDay.text = yesString
+                    isDay.text = getString(R.string.yes_string)
                 else
-                    isDay.text = noString
+                    isDay.text = getString(R.string.no_string)
 
                 updatedTime.text = resp.current_weather.time.replace("T", ", ")
                 val currentWeatherTextView = findViewById<TextView>(R.id.currentWeatherTextView)
@@ -182,18 +167,17 @@ class Weather : ComponentActivity() {
 
                 findViewById<TextView>(R.id.forecastTextView).visibility = View.INVISIBLE
                 findViewById<HorizontalScrollView>(R.id.forecastContent).visibility = View.VISIBLE
-                println("not here though@!@")
             }
         }catch (e:java.nio.channels.UnresolvedAddressException){
             withContext(Dispatchers.Main){
-                val failedMessage = "Check your Internet Connection."
+                val failedMessage = getString(R.string.error_internet_failure)
                 findViewById<TextView>(R.id.currentWeatherTextView).text = failedMessage
                 findViewById<TextView>(R.id.forecastTextView).text = failedMessage
             }
         }
         catch (e:Exception){
             withContext(Dispatchers.Main){
-                val failedMessage = "Failed to load data."
+                val failedMessage = getString(R.string.error_unable_to_retrieve)
                 println("Exception !@!@!")
                 println(e.message)
                 println(e)

@@ -18,16 +18,7 @@ data class CurrentWeather(
 	val weathercode: Int,
 	val is_day: Int,
 	val time: String
-){
-	override fun toString(): String {
-		return "Temperature:				${temperature}\n" +
-				"Wind Speed:				${windspeed}\n"+
-				"Wind Direction:			${winddirection}\n"+
-				"Weather Code:				${weathercode}\n"+
-				"Is Day:					${is_day}\n"+
-				"Time:						${time}\n"
-	}
-}
+)
 
 data class DailyUnits(
 	val time: String,
@@ -55,19 +46,5 @@ data class Daily(
 	val winddirection_10m_dominant: List<Int>,
 	val temperature_2m_max: List<Double>,
 	val temperature_2m_min: List<Double>
-){
-	override fun toString(): String {
-		return "Time: ${time}\n"+
-				"Sunrise: ${sunrise}\n"+
-				"Sunset: ${sunset}\n"+
-				"UV Index (Max): ${uv_index_max}\n"+
-				"UV Index Clear Sky (Max): ${uv_index_clear_sky_max}\n"+
-				"Precipitation: ${precipitation_sum}\n"+
-				"Wind Speed (Max): ${windspeed_10m_max}\n"+
-				"Wind Gusts (Max): ${windgusts_10m_max}\n"+
-				"Wind Direction (Dominant): ${winddirection_10m_dominant}\n"+
-				"Temperature (Max): ${temperature_2m_max}\n"+
-				"Temperature (Min): ${temperature_2m_min}"
-	}
-}
+)
 
