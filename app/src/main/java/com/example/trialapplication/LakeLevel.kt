@@ -4,8 +4,13 @@ import android.os.Bundle
 import android.view.View
 //import android.webkit.WebView
 import android.widget.HorizontalScrollView
+import android.widget.TableLayout
+import android.widget.TableRow
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -24,8 +29,31 @@ import org.jsoup.select.Elements
 
 class LakeLevel : AppCompatActivity() {
 
+    private fun formTableCell(rowView: TableRow, text_value: String, bgcolor: Int, isBold: Boolean, text_align: Int){
+        val textView = TextView(this@LakeLevel)
+        textView.textSize = 15.toFloat()
+        textView.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, bgcolor))
+        val layoutParams = TableRow.LayoutParams(
+            TableRow.LayoutParams.MATCH_PARENT,
+            TableRow.LayoutParams.MATCH_PARENT
+        )
+        layoutParams.weight = 1.0f
+        layoutParams.marginStart = 1
+        layoutParams.marginEnd = 1
+        layoutParams.bottomMargin = 1
+        layoutParams.topMargin = 1
+        layoutParams.weight = 1.0f
+        textView.layoutParams = layoutParams
+        textView.textAlignment = text_align
+        textView.gravity = android.view.Gravity.CENTER
+        if (isBold) textView.typeface = android.graphics.Typeface.DEFAULT_BOLD
+        textView.setPadding(5,5,5,5)
+        textView.text = text_value
+        rowView.addView(textView)
+    }
     private suspend fun retrieveData(){
         val values: Elements
+        val header_values: Elements
         val updatedDate: String
         try {
             withContext(Dispatchers.IO) {
@@ -39,91 +67,49 @@ class LakeLevel : AppCompatActivity() {
                 val tableElement: Element =
                     doc.getElementsByClass(getString(R.string.lake_level_table_class_name))[0];
                 values = tableElement.getElementsByTag("td")
-
+                header_values = tableElement.getElementsByTag("th")
 //                tableElement.attr("border", "2")
 //                table = tableElement.outerHtml();
                 updatedDate =
                     doc.getElementsByAttributeValue("style", "font-size: 18px;")[0].text();
             }
             withContext(Dispatchers.Main) {
-
-                findViewById<TextView>(R.id.lake1Value1).text = values[0].text()
-                findViewById<TextView>(R.id.lake1Value2).text = values[1].text()
-                findViewById<TextView>(R.id.lake1Value3).text = values[2].text()
-                findViewById<TextView>(R.id.lake1Value4).text = values[3].text()
-                findViewById<TextView>(R.id.lake1Value5).text = values[4].text()
-                findViewById<TextView>(R.id.lake1Value6).text = values[5].text()
-                findViewById<TextView>(R.id.lake1Value7).text = values[6].text()
-                findViewById<TextView>(R.id.lake1Value8).text = values[7].text()
-                findViewById<TextView>(R.id.lake1Value9).text = values[8].text()
-                findViewById<TextView>(R.id.lake1Value10).text = values[9].text()
-
-                findViewById<TextView>(R.id.lake2Value1).text = values[10].text()
-                findViewById<TextView>(R.id.lake2Value2).text = values[11].text()
-                findViewById<TextView>(R.id.lake2Value3).text = values[12].text()
-                findViewById<TextView>(R.id.lake2Value4).text = values[13].text()
-                findViewById<TextView>(R.id.lake2Value5).text = values[14].text()
-                findViewById<TextView>(R.id.lake2Value6).text = values[15].text()
-                findViewById<TextView>(R.id.lake2Value7).text = values[16].text()
-                findViewById<TextView>(R.id.lake2Value8).text = values[17].text()
-                findViewById<TextView>(R.id.lake2Value9).text = values[18].text()
-                findViewById<TextView>(R.id.lake2Value10).text = values[19].text()
-
-                findViewById<TextView>(R.id.lake3Value1).text = values[20].text()
-                findViewById<TextView>(R.id.lake3Value2).text = values[21].text()
-                findViewById<TextView>(R.id.lake3Value3).text = values[22].text()
-                findViewById<TextView>(R.id.lake3Value4).text = values[23].text()
-                findViewById<TextView>(R.id.lake3Value5).text = values[24].text()
-                findViewById<TextView>(R.id.lake3Value6).text = values[25].text()
-                findViewById<TextView>(R.id.lake3Value7).text = values[26].text()
-                findViewById<TextView>(R.id.lake3Value8).text = values[27].text()
-                findViewById<TextView>(R.id.lake3Value9).text = values[28].text()
-                findViewById<TextView>(R.id.lake3Value10).text = values[29].text()
-
-                findViewById<TextView>(R.id.lake4Value1).text = values[30].text().replace(" ","\n")
-                findViewById<TextView>(R.id.lake4Value2).text = values[31].text()
-                findViewById<TextView>(R.id.lake4Value3).text = values[32].text()
-                findViewById<TextView>(R.id.lake4Value4).text = values[33].text()
-                findViewById<TextView>(R.id.lake4Value5).text = values[34].text()
-                findViewById<TextView>(R.id.lake4Value6).text = values[35].text()
-                findViewById<TextView>(R.id.lake4Value7).text = values[36].text()
-                findViewById<TextView>(R.id.lake4Value8).text = values[37].text()
-                findViewById<TextView>(R.id.lake4Value9).text = values[38].text()
-                findViewById<TextView>(R.id.lake4Value10).text = values[39].text()
-
-                findViewById<TextView>(R.id.lake5Value1).text = values[40].text()
-                findViewById<TextView>(R.id.lake5Value2).text = values[41].text()
-                findViewById<TextView>(R.id.lake5Value3).text = values[42].text()
-                findViewById<TextView>(R.id.lake5Value4).text = values[43].text()
-                findViewById<TextView>(R.id.lake5Value5).text = values[44].text()
-                findViewById<TextView>(R.id.lake5Value6).text = values[45].text()
-                findViewById<TextView>(R.id.lake5Value7).text = values[46].text()
-                findViewById<TextView>(R.id.lake5Value8).text = values[47].text()
-                findViewById<TextView>(R.id.lake5Value9).text = values[48].text()
-                findViewById<TextView>(R.id.lake5Value10).text = values[49].text()
-
-                findViewById<TextView>(R.id.lake6Value1).text = values[50].text()
-                findViewById<TextView>(R.id.lake6Value2).text = values[51].text()
-                findViewById<TextView>(R.id.lake6Value3).text = values[52].text()
-                findViewById<TextView>(R.id.lake6Value4).text = values[53].text()
-                findViewById<TextView>(R.id.lake6Value5).text = values[54].text()
-                findViewById<TextView>(R.id.lake6Value6).text = values[55].text()
-                findViewById<TextView>(R.id.lake6Value7).text = values[56].text()
-                findViewById<TextView>(R.id.lake6Value8).text = values[57].text()
-                findViewById<TextView>(R.id.lake6Value9).text = values[58].text()
-                findViewById<TextView>(R.id.lake6Value10).text = values[59].text()
-
-                findViewById<TextView>(R.id.totalValue1).text = values[60].text()
-                findViewById<TextView>(R.id.totalValue2).text = values[61].text()
-                findViewById<TextView>(R.id.totalValue3).text = values[62].text()
-                findViewById<TextView>(R.id.totalValue4).text = values[63].text()
-                findViewById<TextView>(R.id.totalValue5).text = values[64].text()
-                findViewById<TextView>(R.id.totalValue6).text = values[65].text()
-                findViewById<TextView>(R.id.totalValue7).text = values[66].text()
-                findViewById<TextView>(R.id.totalValue8).text = values[67].text()
-                findViewById<TextView>(R.id.totalValue9).text = values[68].text()
-                findViewById<TextView>(R.id.totalValue10).text = values[69].text()
-//                webView.loadData(table, "text/html; charset=utf-8", "UTF-8")
+                val tableLayout = findViewById<TableLayout>(R.id.lakeLevelTableLayout)
+                tableLayout.removeAllViews()
+                val no_of_rows = (values.size/header_values.size).toInt()
+                val tableHeaderRow = TableRow(this@LakeLevel)
+                tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.black))
+                val rowLayoutParams = TableLayout.LayoutParams()
+                rowLayoutParams.weight = 1.0f
+                tableHeaderRow.layoutParams = rowLayoutParams
+                for (i in 0 until header_values.size){
+                    formTableCell(
+                        rowView = tableHeaderRow,
+                        text_value = header_values[i].text().replace(" ","\n"),
+                        bgcolor = R.color.dark_dark_grey,
+                        text_align = if (i==0) View.TEXT_ALIGNMENT_TEXT_START else View.TEXT_ALIGNMENT_CENTER ,
+                        isBold = true
+                    )
+                }
+                tableLayout.addView(tableHeaderRow)
+                var k = 0
+                for (i in 0 until no_of_rows){
+                    val tableRow = TableRow(this@LakeLevel)
+                    tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.black))
+                    val rowLayoutParams = TableLayout.LayoutParams()
+                    rowLayoutParams.weight = 1.0f
+                    tableRow.layoutParams = rowLayoutParams
+                    for (j in 0 until header_values.size){
+                        formTableCell(
+                            rowView = tableRow,
+                            text_value = values[k++].text().replace(" ", "\n"),
+                            bgcolor = if (j==0) R.color.grey else R.color.light_grey,
+                            text_align = if (j==0) View.TEXT_ALIGNMENT_TEXT_START else View.TEXT_ALIGNMENT_CENTER,
+                            isBold = false
+                        )
+                    }
+                    tableLayout.addView(tableRow)
+                }
                 findViewById<TextView>(R.id.updatedTextView).text = updatedDate
                 findViewById<HorizontalScrollView>(R.id.lakeLevelContent).visibility = View.VISIBLE
             }
