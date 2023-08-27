@@ -1,4 +1,4 @@
-package com.example.trialapplication
+package nightfury0.android.chennaiweather
 
 import org.junit.Test
 

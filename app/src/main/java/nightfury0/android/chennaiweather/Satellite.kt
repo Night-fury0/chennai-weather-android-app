@@ -1,4 +1,4 @@
-package com.example.trialapplication
+package nightfury0.android.chennaiweather
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

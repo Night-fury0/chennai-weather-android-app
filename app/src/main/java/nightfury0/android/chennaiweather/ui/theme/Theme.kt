@@ -1,4 +1,4 @@
-package com.example.trialapplication.ui.theme
+package nightfury0.android.chennaiweather.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.trialapplication"
+    namespace = "nightfury0.android.chennaiweather"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.trialapplication"
+        applicationId = "nightfury0.android.chennaiweather"
         minSdk = 22
         targetSdk = 33
         versionCode = 1
