@@ -7,9 +7,7 @@ import android.widget.HorizontalScrollView
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import io.ktor.client.HttpClient
@@ -96,8 +94,6 @@ class LakeLevel : AppCompatActivity() {
                 for (i in 0 until no_of_rows){
                     val tableRow = TableRow(this@LakeLevel)
                     tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.black))
-                    val rowLayoutParams = TableLayout.LayoutParams()
-                    rowLayoutParams.weight = 1.0f
                     tableRow.layoutParams = rowLayoutParams
                     for (j in 0 until header_values.size){
                         formTableCell(
