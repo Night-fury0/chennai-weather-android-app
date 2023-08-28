@@ -49,7 +49,6 @@ class Radar : AppCompatActivity() {
         val radar5Button = findViewById<Button>(R.id.radar5Button)
         val radar6Button = findViewById<Button>(R.id.radar6Button)
 
-
         radarImageView.setOnTouchListener { _, event ->
             when (event.action and MotionEvent.ACTION_MASK) {
                 MotionEvent.ACTION_DOWN -> {

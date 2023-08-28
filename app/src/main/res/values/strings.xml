@@ -7,7 +7,14 @@
     <string name="forecast_heading">FORECAST</string>
     <string name="satellite_heading">SATELLITE</string>
     <string name="lake_level_heading">LAKE LEVEL</string>
+    <string name="rainfall_heading">RAINFALL</string>
+    <string name="stations_heading">STATIONS</string>
     <string name="loading_text">Loading…</string>
+    <string name="wip_text">Work in Progress</string>
+
+    <string name="default_state">TAMIL_NADU</string>
+    <string name="default_district">CHENNAI</string>
+    <string name="default_station">CHENNAI</string>
 
     <string name="weather_url">https://api.open-meteo.com/v1/forecast?latitude=13.0878&amp;longitude=80.2785&amp;timezone=auto&amp;current_weather=true&amp;daily=sunrise,sunset,uv_index_max,uv_index_clear_sky_max,precipitation_sum,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant,temperature_2m_max,temperature_2m_min&amp;forecast_days=3</string>
     <string name="yes_string">Yes</string>
