@@ -2,7 +2,6 @@ package nightfury0.android.chennaiweather
 
 import android.os.Bundle
 import android.view.View
-//import android.webkit.WebView
 import android.widget.HorizontalScrollView
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -44,8 +43,6 @@ class LakeLevel : AppCompatActivity() {
                     doc.getElementsByClass(getString(R.string.lake_level_table_class_name))[0]
                 values = tableElement.getElementsByTag("td")
                 headerValues = tableElement.getElementsByTag("th")
-//                tableElement.attr("border", "2")
-//                table = tableElement.outerHtml();
                 updatedDate =
                     doc.getElementsByAttributeValue("style", "font-size: 18px;")[0].text()
             }
@@ -107,7 +104,7 @@ class LakeLevel : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.lake_level_table)
+        setContentView(R.layout.lake_level)
         lifecycleScope.launch {
            retrieveData()
         }

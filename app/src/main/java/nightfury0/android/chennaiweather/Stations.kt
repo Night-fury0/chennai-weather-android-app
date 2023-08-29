@@ -111,11 +111,11 @@ class Stations : AppCompatActivity() {
         setContentView(R.layout.stations)
 
         stationsTextView = findViewById(R.id.stationsTextView)
-        val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone(resources.getString(R.string.stations_timezone)))
         val year = utcCalendar.get(Calendar.YEAR)
         val month = utcCalendar.get(Calendar.MONTH) + 1 // Month is 0-based
         val day = utcCalendar.get(Calendar.DAY_OF_MONTH)
-        val formattedDate = String.format("%04d-%02d-%02d", year, month, day)
+        val formattedDate = String.format(resources.getString(R.string.stations_dateformat), year, month, day)
 
         val spinner1 = findViewById<Spinner>(R.id.stationsSpinner1)
         val spinner2 = findViewById<Spinner>(R.id.stationsSpinner2)
@@ -124,7 +124,9 @@ class Stations : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val states_list = ArrayList<String>()
-                val spinner1Url = "http://aws.imd.gov.in:8091/AWS/sta.php?types=AWSAGRO"
+                val spinner1Url = resources.getString(R.string.stations_base_url) +
+                        "/${resources.getString(R.string.stations_states)}" +
+                        "?types=${resources.getString(R.string.stations_type)}"
                 withContext(Dispatchers.IO) {
                     val response = HttpClient(CIO).request<HttpResponse>(spinner1Url) {
                         method = HttpMethod.Get
@@ -167,8 +169,10 @@ class Stations : AppCompatActivity() {
                 try{
                     val state = spinner1.adapter.getItem(position)
                         ?: resources.getString(R.string.default_state)
-                    val spinner2Url =
-                        "http://aws.imd.gov.in:8091/AWS/dis.php?types=AWSAGRO&states=${state}"
+                    val spinner2Url = resources.getString(R.string.stations_base_url) +
+                                "/${resources.getString(R.string.stations_districts)}" +
+                                "?types=${resources.getString(R.string.stations_type)}" +
+                                "&states=${state}"
                     val district_list = ArrayList<String>()
                     lifecycleScope.launch {
                         try {
@@ -238,8 +242,10 @@ class Stations : AppCompatActivity() {
                     val state = spinner1.selectedItem
                     val district = spinner2.adapter.getItem(position)
                         ?: resources.getString(R.string.default_district)
-                    val spinner3Url =
-                        "http://aws.imd.gov.in:8091/AWS/stat.php?types=AWSAGRO&states=${state}&disc=${district}"
+                    val spinner3Url = resources.getString(R.string.stations_base_url) +
+                                "/${resources.getString(R.string.stations_stations)}" +
+                                "?types=${resources.getString(R.string.stations_type)}" +
+                                "&states=${state}&disc=${district}"
                     val stations_list = ArrayList<String>()
                     lifecycleScope.launch {
                         try {
@@ -309,8 +315,16 @@ class Stations : AppCompatActivity() {
                     val district = spinner2.selectedItem
                     val station = spinner3.adapter.getItem(position)
                         ?: resources.getString(R.string.default_station)
-                    val url =
-                        "http://aws.imd.gov.in:8091/AWS/dataview.php?a=AWSAGRO&b=${state}&c=${district}&d=${station}&e=${formattedDate}&f=${formattedDate}&g=ALL_HOUR&h=ALL_MINUTE"
+                    val url = resources.getString(R.string.stations_base_url) +
+                                "/${resources.getString(R.string.stations_dataview)}" +
+                                "?a=${resources.getString(R.string.stations_type)}" +
+                                "&b=${state}" +
+                                "&c=${district}" +
+                                "&d=${station}" +
+                                "&e=${formattedDate}" +
+                                "&f=${formattedDate}" +
+                                "&g=ALL_HOUR" +
+                                "&h=ALL_MINUTE"
                     lifecycleScope.launch() {
                         withContext(Dispatchers.IO) {
                             retrieveData(url)

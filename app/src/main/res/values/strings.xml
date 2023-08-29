@@ -53,6 +53,19 @@
     <string name="lake_level_url">https://cmwssb.tn.gov.in/lake-level</string>
     <string name="lake_level_table_class_name">lack-view table table-responsive table-striped table-bordered</string>
 
+    <string name="stations_base_url">http://aws.imd.gov.in:8091/AWS</string>
+    <string name="stations_type">AWSAGRO</string>
+    <string name="stations_states">sta.php</string>
+    <string name="stations_districts">dis.php</string>
+    <string name="stations_stations">stat.php</string>
+    <string name="stations_dataview">dataview.php</string>
+
+    <string name="rainfall_dataview">dataviewrain.php</string>
+    <string name="rainfall_stations_type">ALL</string>
+
+    <string name="stations_timezone">UTC</string>
+    <string name="stations_dateformat">%04d-%02d-%02d</string>
+
     <string name="error_internet_failure">Check your Internet Connection</string>
     <string name="error_unable_to_retrieve">Failed to load data</string>
 

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LakeLevel">
 
-
     <TextView
         android:id="@+id/lakeLevelHeader"
         android:layout_width="wrap_content"
@@ -58,7 +57,7 @@
         android:layout_marginBottom="30dp"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:text="Loading..." />
+        android:text="@string/loading_text" />
 
 
 </RelativeLayout>

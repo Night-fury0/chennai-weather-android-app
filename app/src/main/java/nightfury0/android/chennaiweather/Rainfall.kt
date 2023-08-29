@@ -113,18 +113,20 @@ class Rainfall : AppCompatActivity() {
         setContentView(R.layout.rainfall)
         rainfallTextView = findViewById(R.id.rainfallTextView)
 
-        val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone(resources.getString(R.string.stations_timezone)))
         val year = utcCalendar.get(Calendar.YEAR)
         val month = utcCalendar.get(Calendar.MONTH) + 1 // Month is 0-based
         val day = utcCalendar.get(Calendar.DAY_OF_MONTH)
-        val formattedDate = String.format("%04d-%02d-%02d", year, month, day)
+        val formattedDate = String.format(resources.getString(R.string.stations_dateformat), year, month, day)
 
         val spinner = findViewById<Spinner>(R.id.stateSpinner)
 
         lifecycleScope.launch {
             try {
                 val statesList = ArrayList<String>()
-                val statesUrl = "http://aws.imd.gov.in:8091/AWS/sta.php?types=ALL"
+                val statesUrl = resources.getString(R.string.stations_base_url) +
+                        "/${resources.getString(R.string.stations_states)}" +
+                        "?types=${resources.getString(R.string.rainfall_stations_type)}"
                 withContext(Dispatchers.IO) {
                     val response = HttpClient(CIO).request<HttpResponse>(statesUrl) {
                         method = HttpMethod.Get
@@ -166,9 +168,12 @@ class Rainfall : AppCompatActivity() {
             ) {
                 val state = spinner.adapter.getItem(position)
                     ?: resources.getString(R.string.default_state)
-                println("chosen #$# :${state}")
                 val url =
-                    "http://aws.imd.gov.in:8091/AWS/dataviewrain.php?a=ALL&b=${state}&c=${formattedDate}"
+                    resources.getString(R.string.stations_base_url) +
+                            "/${resources.getString(R.string.rainfall_dataview)}" +
+                            "?a=${resources.getString(R.string.rainfall_stations_type)}" +
+                            "&b=${state}" +
+                            "&c=${formattedDate}"
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
                         retrieveData(url)
