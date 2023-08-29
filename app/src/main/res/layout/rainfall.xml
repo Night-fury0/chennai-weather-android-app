@@ -1,86 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/rainfallRefresh"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Rainfall">
 
-    <TextView
-        android:id="@+id/rainfallHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/rainfall_heading"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <Spinner
-        android:id="@+id/stateSpinner"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rainfallHeader"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:spinnerMode="dropdown"
-        android:visibility="invisible"
-        android:layout_centerHorizontal="true">
-    </Spinner>
+        android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/rainfallContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/stateSpinner"
-        android:layout_marginTop="30dp"
-        android:layout_above="@id/rainfallTextView"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:visibility="invisible">
+        <TextView
+            android:id="@+id/rainfallHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/rainfall_heading"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <LinearLayout
+        <Spinner
+            android:id="@+id/stateSpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rainfallHeader"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:spinnerMode="dropdown"
+            android:visibility="invisible"
+            android:layout_centerHorizontal="true">
+        </Spinner>
 
-            <HorizontalScrollView
+        <ScrollView
+            android:id="@+id/rainfallContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/stateSpinner"
+            android:layout_marginTop="30dp"
+            android:layout_above="@id/rainfallTextView"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="invisible">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/black">
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <TableLayout
-                        android:id="@+id/rainfallTableLayout"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginTop="1dp"
-                        android:stretchColumns="*">
+                        android:background="@color/black">
 
-                    </TableLayout>
-                </LinearLayout>
-            </HorizontalScrollView>
+                        <TableLayout
+                            android:id="@+id/rainfallTableLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginEnd="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginTop="1dp"
+                            android:stretchColumns="*">
 
-        </LinearLayout>
-    </ScrollView>
+                        </TableLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
 
-    <TextView
-        android:id="@+id/rainfallTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:text="@string/loading_text" />
+            </LinearLayout>
+        </ScrollView>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/rainfallTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="@string/loading_text" />
+
+    </RelativeLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

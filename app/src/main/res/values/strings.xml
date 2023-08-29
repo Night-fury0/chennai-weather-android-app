@@ -25,6 +25,7 @@
     <string name="wind_direction">Wind Direction (°)</string>
     <string name="weather_status">Weather Status</string>
     <string name="is_day">Is Day</string>
+    <string name="updated_time">Updated Time</string>
 
     <string name="temperature_2m_max">Temperature 2m Max (°C)</string>
     <string name="temperature_2m_min">Temperature 2m Min (°C)</string>

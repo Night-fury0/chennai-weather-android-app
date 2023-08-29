@@ -66,6 +66,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.16.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 //    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

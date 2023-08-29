@@ -8,10 +8,9 @@ import android.widget.ArrayAdapter
 import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TableLayout
-import android.widget.TableRow
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.request
@@ -33,11 +32,67 @@ import java.util.TimeZone
 class Rainfall : AppCompatActivity() {
 
     private lateinit var rainfallTextView: TextView
+    private lateinit var rainfallContent: ScrollView
+
+    private suspend fun spinner1Population(spinner: Spinner){
+        try {
+            val statesList = ArrayList<String>()
+            val statesUrl = resources.getString(R.string.stations_base_url) +
+                    "/${resources.getString(R.string.stations_states)}" +
+                    "?types=${resources.getString(R.string.rainfall_stations_type)}"
+            withContext(Dispatchers.IO) {
+                val response = HttpClient(CIO).request<HttpResponse>(statesUrl) {
+                    method = HttpMethod.Get
+                }
+                val jsonObject = JSONObject(response.readText())
+                val jsonArray = jsonObject.getJSONArray("data")
+                for (i in 0 until jsonArray.length()) {
+                    statesList.add(jsonArray.getString(i))
+                }
+            }
+            withContext(Dispatchers.Main) {
+                val adapter = ArrayAdapter(
+                    this@Rainfall,
+                    android.R.layout.simple_spinner_item,
+                    statesList
+                )
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner.adapter = adapter
+                spinner.setSelection(adapter.getPosition(resources.getString(R.string.default_state)))
+                spinner.visibility = View.VISIBLE
+            }
+        }catch(e:java.nio.channels.UnresolvedAddressException){
+            rainfallTextView.text = resources.getString(R.string.error_internet_failure)
+            rainfallTextView.visibility = View.VISIBLE
+        }
+        catch(e:Exception){
+            println("Exception !@!@! ${e.message}")
+            rainfallTextView.text = resources.getString(R.string.error_unable_to_retrieve)
+            rainfallTextView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun spinner1OnSelect(spinner:Spinner, position:Int, formattedDate:String){
+        val state = spinner.adapter.getItem(position)
+            ?: resources.getString(R.string.default_state)
+        val url =
+            resources.getString(R.string.stations_base_url) +
+                    "/${resources.getString(R.string.rainfall_dataview)}" +
+                    "?a=${resources.getString(R.string.rainfall_stations_type)}" +
+                    "&b=${state}" +
+                    "&c=${formattedDate}"
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                retrieveData(url)
+            }
+        }
+    }
     private suspend fun retrieveData(url: String){
         val values: Elements
         val headerValues: Elements
         try {
             withContext(Dispatchers.Main){
+                rainfallContent.visibility = View.INVISIBLE
                 rainfallTextView.text = resources.getString(R.string.loading_text)
                 rainfallTextView.visibility = View.VISIBLE
             }
@@ -54,43 +109,9 @@ class Rainfall : AppCompatActivity() {
             }
             withContext(Dispatchers.Main) {
                 val tableLayout = findViewById<TableLayout>(R.id.rainfallTableLayout)
-                tableLayout.removeAllViews()
-                val noOfRows = (values.size/headerValues.size)
-                val tableHeaderRow = TableRow(this@Rainfall)
-                tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@Rainfall, R.color.black))
-                val rowLayoutParams = TableLayout.LayoutParams()
-                rowLayoutParams.weight = 1.0f
-                tableHeaderRow.layoutParams = rowLayoutParams
-                for (i in 0 until headerValues.size){
-                    Templates().formTableCell(
-                        context = this@Rainfall,
-                        rowView = tableHeaderRow,
-                        textValue = headerValues[i].text().replace(" ","\n"),
-                        bgcolor = R.color.grey,
-                        textAlign = View.TEXT_ALIGNMENT_CENTER,
-                        isBold = true
-                    )
-                }
-                tableLayout.addView(tableHeaderRow)
-                var k = 0
-                for (i in 0 until noOfRows){
-                    val tableRow = TableRow(this@Rainfall)
-                    tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@Rainfall, R.color.black))
-                    tableRow.layoutParams = rowLayoutParams
-                    for (j in 0 until headerValues.size){
-                        Templates().formTableCell(
-                            context = this@Rainfall,
-                            rowView = tableRow,
-                            textValue = values[k++].text().replace(" ", "\n"),
-                            bgcolor = R.color.light_grey,
-                            textAlign = View.TEXT_ALIGNMENT_CENTER,
-                            isBold = false
-                        )
-                    }
-                    tableLayout.addView(tableRow)
-                }
+                Templates().formTableFromHtml(this@Rainfall,tableLayout,headerValues,values)
                 rainfallTextView.visibility = View.INVISIBLE
-                findViewById<ScrollView>(R.id.rainfallContent).visibility = View.VISIBLE
+                rainfallContent.visibility = View.VISIBLE
             }
         }
         catch(e:java.nio.channels.UnresolvedAddressException){
@@ -112,6 +133,7 @@ class Rainfall : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rainfall)
         rainfallTextView = findViewById(R.id.rainfallTextView)
+        rainfallContent = findViewById(R.id.rainfallContent)
 
         val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone(resources.getString(R.string.stations_timezone)))
         val year = utcCalendar.get(Calendar.YEAR)
@@ -122,41 +144,7 @@ class Rainfall : AppCompatActivity() {
         val spinner = findViewById<Spinner>(R.id.stateSpinner)
 
         lifecycleScope.launch {
-            try {
-                val statesList = ArrayList<String>()
-                val statesUrl = resources.getString(R.string.stations_base_url) +
-                        "/${resources.getString(R.string.stations_states)}" +
-                        "?types=${resources.getString(R.string.rainfall_stations_type)}"
-                withContext(Dispatchers.IO) {
-                    val response = HttpClient(CIO).request<HttpResponse>(statesUrl) {
-                        method = HttpMethod.Get
-                    }
-                    val jsonObject = JSONObject(response.readText())
-                    val jsonArray = jsonObject.getJSONArray("data")
-                    for (i in 0 until jsonArray.length()) {
-                        statesList.add(jsonArray.getString(i))
-                    }
-                }
-                withContext(Dispatchers.Main) {
-                    val adapter = ArrayAdapter(
-                        this@Rainfall,
-                        android.R.layout.simple_spinner_item,
-                        statesList
-                    )
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    spinner.adapter = adapter
-                    spinner.setSelection(adapter.getPosition(resources.getString(R.string.default_state)))
-                    spinner.visibility = View.VISIBLE
-                }
-            }catch(e:java.nio.channels.UnresolvedAddressException){
-                rainfallTextView.text = resources.getString(R.string.error_internet_failure)
-                rainfallTextView.visibility = View.VISIBLE
-            }
-            catch(e:Exception){
-                println("Exception !@!@! ${e.message}")
-                rainfallTextView.text = resources.getString(R.string.error_unable_to_retrieve)
-                rainfallTextView.visibility = View.VISIBLE
-            }
+            spinner1Population(spinner)
         }
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -166,24 +154,25 @@ class Rainfall : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                val state = spinner.adapter.getItem(position)
-                    ?: resources.getString(R.string.default_state)
-                val url =
-                    resources.getString(R.string.stations_base_url) +
-                            "/${resources.getString(R.string.rainfall_dataview)}" +
-                            "?a=${resources.getString(R.string.rainfall_stations_type)}" +
-                            "&b=${state}" +
-                            "&c=${formattedDate}"
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        retrieveData(url)
-                    }
-                }
+                spinner1OnSelect(spinner, position, formattedDate)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
+        }
+
+        val rainfallRefresh = findViewById<SwipeRefreshLayout>(R.id.rainfallRefresh)
+        rainfallRefresh.setOnRefreshListener {
+            if (spinner.visibility == View.VISIBLE){
+                spinner1OnSelect(spinner, spinner.selectedItemPosition, formattedDate)
+            }
+            else{
+                lifecycleScope.launch {
+                    spinner1Population(spinner)
+                }
+            }
+            rainfallRefresh.isRefreshing = false
         }
 
     }

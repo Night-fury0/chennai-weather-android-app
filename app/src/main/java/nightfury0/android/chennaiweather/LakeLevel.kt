@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.request
@@ -25,12 +26,19 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
 class LakeLevel : AppCompatActivity() {
+    private lateinit var updatedTextView: TextView
+    private lateinit var lakeLevelContent: HorizontalScrollView
 
     private suspend fun retrieveData(){
         val values: Elements
         val headerValues: Elements
         val updatedDate: String
         try {
+            withContext(Dispatchers.Main){
+                lakeLevelContent.visibility = View.INVISIBLE
+                updatedTextView.text = resources.getString(R.string.loading_text)
+                updatedTextView.visibility = View.VISIBLE
+            }
             withContext(Dispatchers.IO) {
                 val url = getString(R.string.lake_level_url)
                 val client = HttpClient(CIO)
@@ -48,65 +56,52 @@ class LakeLevel : AppCompatActivity() {
             }
             withContext(Dispatchers.Main) {
                 val tableLayout = findViewById<TableLayout>(R.id.lakeLevelTableLayout)
-                tableLayout.removeAllViews()
-                val noOfRows = (values.size/headerValues.size).toInt()
-                val tableHeaderRow = TableRow(this@LakeLevel)
-                tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.black))
-                val rowLayoutParams = TableLayout.LayoutParams()
-                rowLayoutParams.weight = 1.0f
-                tableHeaderRow.layoutParams = rowLayoutParams
-                for (i in 0 until headerValues.size){
-                    Templates().formTableCell(
-                        context = this@LakeLevel,
-                        rowView = tableHeaderRow,
-                        textValue = headerValues[i].text().replace(" ","\n"),
-                        bgcolor = R.color.dark_dark_grey,
-                        textAlign = if (i==0) View.TEXT_ALIGNMENT_TEXT_START else View.TEXT_ALIGNMENT_CENTER ,
-                        isBold = true
-                    )
+                Templates().formTableFromHtml(this@LakeLevel, tableLayout, headerValues, values)
+                for (rowIndex in 0 until tableLayout.childCount){
+                    val tableRow = tableLayout.getChildAt(rowIndex) as TableRow
+                    val firstCell = tableRow.getChildAt(0) as TextView
+                    if (rowIndex==0)
+                        firstCell.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.dark_dark_grey))
+                    else
+                        firstCell.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.grey))
+                    firstCell.text = firstCell.text.toString().replace(" ","\n")
+                    firstCell.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
                 }
-                tableLayout.addView(tableHeaderRow)
-                var k = 0
-                for (i in 0 until noOfRows){
-                    val tableRow = TableRow(this@LakeLevel)
-                    tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.black))
-                    tableRow.layoutParams = rowLayoutParams
-                    for (j in 0 until headerValues.size){
-                        Templates().formTableCell(
-                            context = this@LakeLevel,
-                            rowView = tableRow,
-                            textValue = values[k++].text().replace(" ", "\n"),
-                            bgcolor = if (j==0) R.color.grey else R.color.light_grey,
-                            textAlign = if (j==0) View.TEXT_ALIGNMENT_TEXT_START else View.TEXT_ALIGNMENT_CENTER,
-                            isBold = false
-                        )
-                    }
-                    tableLayout.addView(tableRow)
-                }
-                findViewById<TextView>(R.id.updatedTextView).text = updatedDate
+                updatedTextView.text = updatedDate
                 findViewById<HorizontalScrollView>(R.id.lakeLevelContent).visibility = View.VISIBLE
             }
         }
         catch(e:java.nio.channels.UnresolvedAddressException){
             withContext(Dispatchers.Main){
-                val failedMessage = getString(R.string.error_internet_failure)
-                findViewById<TextView>(R.id.updatedTextView).text = failedMessage
+                updatedTextView.text = getString(R.string.error_internet_failure)
             }
         }
         catch(e:Exception){
             withContext(Dispatchers.Main){
-                val failedMessage = getString(R.string.error_unable_to_retrieve)
                 println("Exception !@!@!")
                 println(e.message)
-                findViewById<TextView>(R.id.updatedTextView).text = failedMessage
+                updatedTextView.text = getString(R.string.error_unable_to_retrieve)
             }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lake_level)
+
+        updatedTextView = findViewById(R.id.updatedTextView)
+        lakeLevelContent = findViewById(R.id.lakeLevelContent)
+
         lifecycleScope.launch {
            retrieveData()
         }
+
+        val lakeLevelRefresh = findViewById<SwipeRefreshLayout>(R.id.lakeLevelRefresh)
+        lakeLevelRefresh.setOnRefreshListener {
+            lifecycleScope.launch {
+                retrieveData()
+            }
+            lakeLevelRefresh.isRefreshing = false
+        }
+
     }
 }
