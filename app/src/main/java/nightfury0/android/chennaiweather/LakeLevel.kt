@@ -27,31 +27,9 @@ import org.jsoup.select.Elements
 
 class LakeLevel : AppCompatActivity() {
 
-    private fun formTableCell(rowView: TableRow, text_value: String, bgcolor: Int, isBold: Boolean, text_align: Int){
-        val textView = TextView(this@LakeLevel)
-        textView.textSize = 15.toFloat()
-        textView.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, bgcolor))
-        val layoutParams = TableRow.LayoutParams(
-            TableRow.LayoutParams.MATCH_PARENT,
-            TableRow.LayoutParams.MATCH_PARENT
-        )
-        layoutParams.weight = 1.0f
-        layoutParams.marginStart = 1
-        layoutParams.marginEnd = 1
-        layoutParams.bottomMargin = 1
-        layoutParams.topMargin = 1
-        layoutParams.weight = 1.0f
-        textView.layoutParams = layoutParams
-        textView.textAlignment = text_align
-        textView.gravity = android.view.Gravity.CENTER
-        if (isBold) textView.typeface = android.graphics.Typeface.DEFAULT_BOLD
-        textView.setPadding(5,5,5,5)
-        textView.text = text_value
-        rowView.addView(textView)
-    }
     private suspend fun retrieveData(){
         val values: Elements
-        val header_values: Elements
+        val headerValues: Elements
         val updatedDate: String
         try {
             withContext(Dispatchers.IO) {
@@ -60,47 +38,49 @@ class LakeLevel : AppCompatActivity() {
                 val response: HttpResponse = client.request(url) {
                     method = HttpMethod.Get
                 }
-                val doc: Document = Jsoup.parse(response.readText());
+                val doc: Document = Jsoup.parse(response.readText())
 //                val doc: Document = Jsoup.parse(response.bodyAsText());
                 val tableElement: Element =
-                    doc.getElementsByClass(getString(R.string.lake_level_table_class_name))[0];
+                    doc.getElementsByClass(getString(R.string.lake_level_table_class_name))[0]
                 values = tableElement.getElementsByTag("td")
-                header_values = tableElement.getElementsByTag("th")
+                headerValues = tableElement.getElementsByTag("th")
 //                tableElement.attr("border", "2")
 //                table = tableElement.outerHtml();
                 updatedDate =
-                    doc.getElementsByAttributeValue("style", "font-size: 18px;")[0].text();
+                    doc.getElementsByAttributeValue("style", "font-size: 18px;")[0].text()
             }
             withContext(Dispatchers.Main) {
                 val tableLayout = findViewById<TableLayout>(R.id.lakeLevelTableLayout)
                 tableLayout.removeAllViews()
-                val no_of_rows = (values.size/header_values.size).toInt()
+                val noOfRows = (values.size/headerValues.size).toInt()
                 val tableHeaderRow = TableRow(this@LakeLevel)
                 tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.black))
                 val rowLayoutParams = TableLayout.LayoutParams()
                 rowLayoutParams.weight = 1.0f
                 tableHeaderRow.layoutParams = rowLayoutParams
-                for (i in 0 until header_values.size){
-                    formTableCell(
+                for (i in 0 until headerValues.size){
+                    Templates().formTableCell(
+                        context = this@LakeLevel,
                         rowView = tableHeaderRow,
-                        text_value = header_values[i].text().replace(" ","\n"),
+                        textValue = headerValues[i].text().replace(" ","\n"),
                         bgcolor = R.color.dark_dark_grey,
-                        text_align = if (i==0) View.TEXT_ALIGNMENT_TEXT_START else View.TEXT_ALIGNMENT_CENTER ,
+                        textAlign = if (i==0) View.TEXT_ALIGNMENT_TEXT_START else View.TEXT_ALIGNMENT_CENTER ,
                         isBold = true
                     )
                 }
                 tableLayout.addView(tableHeaderRow)
                 var k = 0
-                for (i in 0 until no_of_rows){
+                for (i in 0 until noOfRows){
                     val tableRow = TableRow(this@LakeLevel)
                     tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@LakeLevel, R.color.black))
                     tableRow.layoutParams = rowLayoutParams
-                    for (j in 0 until header_values.size){
-                        formTableCell(
+                    for (j in 0 until headerValues.size){
+                        Templates().formTableCell(
+                            context = this@LakeLevel,
                             rowView = tableRow,
-                            text_value = values[k++].text().replace(" ", "\n"),
+                            textValue = values[k++].text().replace(" ", "\n"),
                             bgcolor = if (j==0) R.color.grey else R.color.light_grey,
-                            text_align = if (j==0) View.TEXT_ALIGNMENT_TEXT_START else View.TEXT_ALIGNMENT_CENTER,
+                            textAlign = if (j==0) View.TEXT_ALIGNMENT_TEXT_START else View.TEXT_ALIGNMENT_CENTER,
                             isBold = false
                         )
                     }

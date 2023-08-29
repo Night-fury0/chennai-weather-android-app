@@ -30,36 +30,14 @@ import java.util.Calendar
 import java.util.TimeZone
 
 class Stations : AppCompatActivity() {
-
-    private fun formTableCell(rowView: TableRow, text_value: String, bgcolor: Int, isBold: Boolean, text_align: Int){
-        val textView = TextView(this@Stations)
-        textView.textSize = 15.toFloat()
-        textView.setBackgroundColor(ContextCompat.getColor(this@Stations, bgcolor))
-        val layoutParams = TableRow.LayoutParams(
-            TableRow.LayoutParams.MATCH_PARENT,
-            TableRow.LayoutParams.MATCH_PARENT
-        )
-        layoutParams.weight = 1.0f
-        layoutParams.marginStart = 1
-        layoutParams.marginEnd = 1
-        layoutParams.bottomMargin = 1
-        layoutParams.topMargin = 1
-        layoutParams.weight = 1.0f
-        textView.layoutParams = layoutParams
-        textView.textAlignment = text_align
-        textView.gravity = android.view.Gravity.CENTER
-        if (isBold) textView.typeface = android.graphics.Typeface.DEFAULT_BOLD
-        textView.setPadding(5,5,5,5)
-        textView.text = text_value
-        rowView.addView(textView)
-    }
+    private lateinit var stationsTextView: TextView
     private suspend fun retrieveData(url: String){
         val values: Elements
         val header_values: Elements
         try {
             withContext(Dispatchers.Main){
-                findViewById<TextView>(R.id.stationsTextView).text = resources.getString(R.string.loading_text)
-                findViewById<TextView>(R.id.stationsTextView).visibility = View.VISIBLE
+                stationsTextView.text = resources.getString(R.string.loading_text)
+                stationsTextView.visibility = View.VISIBLE
             }
             withContext(Dispatchers.IO) {
                 val client = HttpClient(CIO)
@@ -82,11 +60,12 @@ class Stations : AppCompatActivity() {
                 rowLayoutParams.weight = 1.0f
                 tableHeaderRow.layoutParams = rowLayoutParams
                 for (i in 0 until header_values.size){
-                    formTableCell(
+                    Templates().formTableCell(
+                        context = this@Stations,
                         rowView = tableHeaderRow,
-                        text_value = header_values[i].text().replace(" ","\n"),
+                        textValue = header_values[i].text().replace(" ","\n"),
                         bgcolor = R.color.grey,
-                        text_align = View.TEXT_ALIGNMENT_CENTER ,
+                        textAlign = View.TEXT_ALIGNMENT_CENTER ,
                         isBold = true
                     )
                 }
@@ -97,24 +76,25 @@ class Stations : AppCompatActivity() {
                     tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@Stations, R.color.black))
                     tableRow.layoutParams = rowLayoutParams
                     for (j in 0 until header_values.size){
-                        formTableCell(
+                        Templates().formTableCell(
+                            context = this@Stations,
                             rowView = tableRow,
-                            text_value = values[k++].text().replace(" ", "\n"),
+                            textValue = values[k++].text().replace(" ", "\n"),
                             bgcolor = R.color.light_grey,
-                            text_align = View.TEXT_ALIGNMENT_CENTER,
+                            textAlign = View.TEXT_ALIGNMENT_CENTER,
                             isBold = false
                         )
                     }
                     tableLayout.addView(tableRow)
                 }
-                findViewById<TextView>(R.id.stationsTextView).visibility = View.INVISIBLE
+                stationsTextView.visibility = View.INVISIBLE
                 findViewById<ScrollView>(R.id.stationsContent).visibility = View.VISIBLE
             }
         }
         catch(e:java.nio.channels.UnresolvedAddressException){
             withContext(Dispatchers.Main){
                 val failedMessage = getString(R.string.error_internet_failure)
-                findViewById<TextView>(R.id.stationsTextView).text = failedMessage
+                stationsTextView.text = failedMessage
             }
         }
         catch(e:Exception){
@@ -122,7 +102,7 @@ class Stations : AppCompatActivity() {
                 val failedMessage = getString(R.string.error_unable_to_retrieve)
                 println("Exception !@!@!")
                 println(e.message)
-                findViewById<TextView>(R.id.stationsTextView).text = failedMessage
+                stationsTextView.text = failedMessage
             }
         }
     }
@@ -130,6 +110,7 @@ class Stations : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.stations)
 
+        stationsTextView = findViewById(R.id.stationsTextView)
         val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         val year = utcCalendar.get(Calendar.YEAR)
         val month = utcCalendar.get(Calendar.MONTH) + 1 // Month is 0-based
@@ -141,108 +122,211 @@ class Stations : AppCompatActivity() {
         val spinner3 = findViewById<Spinner>(R.id.stationsSpinner3)
 
         lifecycleScope.launch {
-            val states_list = ArrayList<String>()
-            val spinner1Url = "http://aws.imd.gov.in:8091/AWS/sta.php?types=AWSAGRO"
-            withContext(Dispatchers.IO) {
-                val response = HttpClient(CIO).request<HttpResponse>(spinner1Url) {
-                    method = HttpMethod.Get
+            try {
+                val states_list = ArrayList<String>()
+                val spinner1Url = "http://aws.imd.gov.in:8091/AWS/sta.php?types=AWSAGRO"
+                withContext(Dispatchers.IO) {
+                    val response = HttpClient(CIO).request<HttpResponse>(spinner1Url) {
+                        method = HttpMethod.Get
+                    }
+                    val jsonObject = JSONObject(response.readText())
+                    val jsonArray = jsonObject.getJSONArray("data")
+                    for (i in 0 until jsonArray.length()) {
+                        states_list.add(jsonArray.getString(i))
+                    }
                 }
-                val jsonObject = JSONObject(response.readText())
-                val jsonArray = jsonObject.getJSONArray("data")
-                for (i in 0 until jsonArray.length()){
-                    states_list.add(jsonArray.getString(i))
+                withContext(Dispatchers.Main) {
+                    val adapter = ArrayAdapter(
+                        this@Stations,
+                        android.R.layout.simple_spinner_item,
+                        states_list
+                    )
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinner1.adapter = adapter
+                    spinner1.setSelection(adapter.getPosition(resources.getString(R.string.default_state)))
+                    spinner1.visibility = View.VISIBLE
                 }
+            }catch(e:java.nio.channels.UnresolvedAddressException){
+                stationsTextView.text = resources.getString(R.string.error_internet_failure)
+                stationsTextView.visibility = View.VISIBLE
             }
-            withContext(Dispatchers.Main){
-                val adapter = ArrayAdapter(this@Stations, android.R.layout.simple_spinner_item, states_list)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner1.adapter = adapter
-                spinner1.setSelection(adapter.getPosition(resources.getString(R.string.default_state)))
-                spinner1.visibility = View.VISIBLE
+            catch(e:Exception){
+                println("Exception !@!@! ${e.message}")
+                stationsTextView.text = resources.getString(R.string.error_unable_to_retrieve)
+                stationsTextView.visibility = View.VISIBLE
             }
         }
 
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val state = spinner1.adapter.getItem(position)?:resources.getString(R.string.default_state)
-                val spinner2Url = "http://aws.imd.gov.in:8091/AWS/dis.php?types=AWSAGRO&states=${state}"
-                val district_list = ArrayList<String>()
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        val response = HttpClient(CIO).request<HttpResponse>(spinner2Url) {
-                            method = HttpMethod.Get
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                try{
+                    val state = spinner1.adapter.getItem(position)
+                        ?: resources.getString(R.string.default_state)
+                    val spinner2Url =
+                        "http://aws.imd.gov.in:8091/AWS/dis.php?types=AWSAGRO&states=${state}"
+                    val district_list = ArrayList<String>()
+                    lifecycleScope.launch {
+                        try {
+                            withContext(Dispatchers.IO) {
+                                val response = HttpClient(CIO).request<HttpResponse>(spinner2Url) {
+                                    method = HttpMethod.Get
+                                }
+                                val jsonObject = JSONObject(response.readText())
+                                val jsonArray = jsonObject.getJSONArray("data")
+                                for (i in 0 until jsonArray.length()) {
+                                    district_list.add(jsonArray.getString(i))
+                                }
+                            }
+                            withContext(Dispatchers.Main) {
+                                val adapter = ArrayAdapter(
+                                    this@Stations,
+                                    android.R.layout.simple_spinner_item,
+                                    district_list
+                                )
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                                spinner2.adapter = adapter
+                                spinner2.setSelection(adapter.getPosition(resources.getString(R.string.default_district)))
+                                spinner2.visibility = View.VISIBLE
+                            }
+                        }catch(e:java.nio.channels.UnresolvedAddressException){
+                            stationsTextView.text = resources.getString(R.string.error_internet_failure)
+                            stationsTextView.visibility = View.VISIBLE
+                            spinner2.visibility = View.INVISIBLE
+                            spinner3.visibility = View.INVISIBLE
                         }
-                        val jsonObject = JSONObject(response.readText())
-                        val jsonArray = jsonObject.getJSONArray("data")
-                        for (i in 0 until jsonArray.length()) {
-                            district_list.add(jsonArray.getString(i))
+                        catch(e:Exception){
+                            println("Exception !@!@! ${e.message}")
+                            stationsTextView.text = resources.getString(R.string.error_unable_to_retrieve)
+                            stationsTextView.visibility = View.VISIBLE
+                            spinner2.visibility = View.INVISIBLE
+                            spinner3.visibility = View.INVISIBLE
                         }
                     }
-                    withContext(Dispatchers.Main) {
-                        val adapter = ArrayAdapter(
-                            this@Stations,
-                            android.R.layout.simple_spinner_item,
-                            district_list
-                        )
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        spinner2.adapter = adapter
-                        spinner2.setSelection(adapter.getPosition(resources.getString(R.string.default_district)))
-                        spinner2.visibility = View.VISIBLE
-                    }
+                }catch(e:java.nio.channels.UnresolvedAddressException){
+                    stationsTextView.text = resources.getString(R.string.error_internet_failure)
+                    stationsTextView.visibility = View.VISIBLE
+                    spinner2.visibility = View.INVISIBLE
+                    spinner3.visibility = View.INVISIBLE
+                }
+                catch(e:Exception){
+                    println("Exception !@!@! ${e.message}")
+                    stationsTextView.text = resources.getString(R.string.error_unable_to_retrieve)
+                    spinner2.visibility = View.INVISIBLE
+                    spinner3.visibility = View.INVISIBLE
+                    stationsTextView.visibility = View.VISIBLE
                 }
             }
+
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
         }
 
         spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val state = spinner1.selectedItem
-                val district = spinner2.adapter.getItem(position)?:resources.getString(R.string.default_district)
-                val spinner3Url = "http://aws.imd.gov.in:8091/AWS/stat.php?types=AWSAGRO&states=${state}&disc=${district}"
-                val stations_list = ArrayList<String>()
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        val response = HttpClient(CIO).request<HttpResponse>(spinner3Url) {
-                            method = HttpMethod.Get
-                        }
-                        val jsonObject = JSONObject(response.readText())
-                        val jsonArray = jsonObject.getJSONArray("data")
-                        for (i in 0 until jsonArray.length()) {
-                            stations_list.add(jsonArray.getString(i))
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                try {
+                    val state = spinner1.selectedItem
+                    val district = spinner2.adapter.getItem(position)
+                        ?: resources.getString(R.string.default_district)
+                    val spinner3Url =
+                        "http://aws.imd.gov.in:8091/AWS/stat.php?types=AWSAGRO&states=${state}&disc=${district}"
+                    val stations_list = ArrayList<String>()
+                    lifecycleScope.launch {
+                        try {
+                            withContext(Dispatchers.IO) {
+                                val response = HttpClient(CIO).request<HttpResponse>(spinner3Url) {
+                                    method = HttpMethod.Get
+                                }
+                                val jsonObject = JSONObject(response.readText())
+                                val jsonArray = jsonObject.getJSONArray("data")
+                                for (i in 0 until jsonArray.length()) {
+                                    stations_list.add(jsonArray.getString(i))
+                                }
+                            }
+                            withContext(Dispatchers.Main) {
+                                val adapter = ArrayAdapter(
+                                    this@Stations,
+                                    android.R.layout.simple_spinner_item,
+                                    stations_list
+                                )
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                                spinner3.adapter = adapter
+                                spinner3.setSelection(adapter.getPosition(resources.getString(R.string.default_station)))
+
+                                spinner3.visibility = View.VISIBLE
+                            }
+                        } catch (e: java.nio.channels.UnresolvedAddressException) {
+                            stationsTextView.text =
+                                resources.getString(R.string.error_internet_failure)
+                            stationsTextView.visibility = View.VISIBLE
+                            spinner3.visibility = View.INVISIBLE
+                        } catch (e: Exception) {
+                            println("Exception !@!@! ${e.message}")
+                            stationsTextView.text =
+                                resources.getString(R.string.error_unable_to_retrieve)
+                            stationsTextView.visibility = View.VISIBLE
+                            spinner3.visibility = View.INVISIBLE
                         }
                     }
-                    withContext(Dispatchers.Main) {
-                        val adapter = ArrayAdapter(
-                            this@Stations,
-                            android.R.layout.simple_spinner_item,
-                            stations_list
-                        )
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        spinner3.adapter = adapter
-                        spinner3.setSelection(adapter.getPosition(resources.getString(R.string.default_station)))
-                        spinner3.visibility = View.VISIBLE
-                    }
+                }catch (e: java.nio.channels.UnresolvedAddressException) {
+                    stationsTextView.text =
+                        resources.getString(R.string.error_internet_failure)
+                    stationsTextView.visibility = View.VISIBLE
+                    spinner3.visibility = View.INVISIBLE
+                } catch (e: Exception) {
+                    println("Exception !@!@! ${e.message}")
+                    stationsTextView.text =
+                        resources.getString(R.string.error_unable_to_retrieve)
+                    stationsTextView.visibility = View.VISIBLE
+                    spinner3.visibility = View.INVISIBLE
                 }
             }
+
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
         }
 
         spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val state = spinner1.selectedItem
-                val district = spinner2.selectedItem
-                val station = spinner3.adapter.getItem(position)?:resources.getString(R.string.default_station)
-                val url = "http://aws.imd.gov.in:8091/AWS/dataview.php?a=AWSAGRO&b=${state}&c=${district}&d=${station}&e=${formattedDate}&f=${formattedDate}&g=ALL_HOUR&h=ALL_MINUTE"
-                lifecycleScope.launch() {
-                    withContext(Dispatchers.IO) {
-                        retrieveData(url)
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                try {
+                    val state = spinner1.selectedItem
+                    val district = spinner2.selectedItem
+                    val station = spinner3.adapter.getItem(position)
+                        ?: resources.getString(R.string.default_station)
+                    val url =
+                        "http://aws.imd.gov.in:8091/AWS/dataview.php?a=AWSAGRO&b=${state}&c=${district}&d=${station}&e=${formattedDate}&f=${formattedDate}&g=ALL_HOUR&h=ALL_MINUTE"
+                    lifecycleScope.launch() {
+                        withContext(Dispatchers.IO) {
+                            retrieveData(url)
+                        }
                     }
+                }catch(e:java.nio.channels.UnresolvedAddressException){
+                    stationsTextView.text = resources.getString(R.string.error_internet_failure)
+                    stationsTextView.visibility = View.VISIBLE
+                }
+                catch(e:Exception){
+                    println("Exception !@!@! ${e.message}")
+                    stationsTextView.text = resources.getString(R.string.error_unable_to_retrieve)
+                    stationsTextView.visibility = View.VISIBLE
                 }
             }
+
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }

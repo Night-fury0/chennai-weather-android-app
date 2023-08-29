@@ -20,6 +20,8 @@ import kotlinx.coroutines.withContext
 
 class Weather : ComponentActivity() {
 
+    private lateinit var currentWeatherTextView: TextView
+    private lateinit var forecastTextView: TextView
     private fun checkWeatherCode(weatherCode: Int): String{
         var weatherStatus = "Undefined Weather"
         when (weatherCode){
@@ -63,7 +65,7 @@ class Weather : ComponentActivity() {
                     method = HttpMethod.Get
                 }
                 resp = Gson().fromJson(response.readText(), Response::class.java)
-//                resp = Gson().fromJson(response.bodyAsText(), Response::class.java)
+//                resp = Gson().fromJson(response.bodyAsText(), Response.kt::class.java)
             }
             withContext(Dispatchers.Main) {
                 // Current Weather
@@ -87,7 +89,6 @@ class Weather : ComponentActivity() {
                     isDay.text = getString(R.string.no_string)
 
                 updatedTime.text = resp.current_weather.time.replace("T", ", ")
-                val currentWeatherTextView = findViewById<TextView>(R.id.currentWeatherTextView)
                 val currentWeatherContent =
                     findViewById<HorizontalScrollView>(R.id.currentWeatherContent)
                 currentWeatherTextView.visibility = View.INVISIBLE
@@ -165,14 +166,14 @@ class Weather : ComponentActivity() {
                 findViewById<TextView>(R.id.dayValue2).text = resp.daily.time[1]
                 findViewById<TextView>(R.id.dayValue3).text = resp.daily.time[2]
 
-                findViewById<TextView>(R.id.forecastTextView).visibility = View.INVISIBLE
+                forecastTextView.visibility = View.INVISIBLE
                 findViewById<HorizontalScrollView>(R.id.forecastContent).visibility = View.VISIBLE
             }
         }catch (e:java.nio.channels.UnresolvedAddressException){
             withContext(Dispatchers.Main){
                 val failedMessage = getString(R.string.error_internet_failure)
-                findViewById<TextView>(R.id.currentWeatherTextView).text = failedMessage
-                findViewById<TextView>(R.id.forecastTextView).text = failedMessage
+                currentWeatherTextView.text = failedMessage
+                forecastTextView.text = failedMessage
             }
         }
         catch (e:Exception){
@@ -181,14 +182,18 @@ class Weather : ComponentActivity() {
                 println("Exception !@!@!")
                 println(e.message)
                 println(e)
-                findViewById<TextView>(R.id.currentWeatherTextView).text = failedMessage
-                findViewById<TextView>(R.id.forecastTextView).text = failedMessage
+                currentWeatherTextView.text = failedMessage
+                forecastTextView.text = failedMessage
             }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.weather)
+
+        currentWeatherTextView = findViewById(R.id.currentWeatherTextView)
+        forecastTextView = findViewById(R.id.forecastTextView)
+
         lifecycleScope.launch{
             retrieveData()
         }

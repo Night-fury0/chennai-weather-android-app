@@ -32,29 +32,7 @@ import java.util.TimeZone
 
 class Rainfall : AppCompatActivity() {
 
-    private val rainfallTextView = findViewById<TextView>(R.id.rainfallTextView)
-    private fun formTableCell(rowView: TableRow, textValue: String, bgcolor: Int, isBold: Boolean, textAlign: Int){
-        val textView = TextView(this@Rainfall)
-        textView.textSize = 15.toFloat()
-        textView.setBackgroundColor(ContextCompat.getColor(this@Rainfall, bgcolor))
-        val layoutParams = TableRow.LayoutParams(
-            TableRow.LayoutParams.MATCH_PARENT,
-            TableRow.LayoutParams.MATCH_PARENT
-        )
-        layoutParams.weight = 1.0f
-        layoutParams.marginStart = 1
-        layoutParams.marginEnd = 1
-        layoutParams.bottomMargin = 1
-        layoutParams.topMargin = 1
-        layoutParams.weight = 1.0f
-        textView.layoutParams = layoutParams
-        textView.textAlignment = textAlign
-        textView.gravity = android.view.Gravity.CENTER
-        if (isBold) textView.typeface = android.graphics.Typeface.DEFAULT_BOLD
-        textView.setPadding(5,5,5,5)
-        textView.text = textValue
-        rowView.addView(textView)
-    }
+    private lateinit var rainfallTextView: TextView
     private suspend fun retrieveData(url: String){
         val values: Elements
         val headerValues: Elements
@@ -84,11 +62,12 @@ class Rainfall : AppCompatActivity() {
                 rowLayoutParams.weight = 1.0f
                 tableHeaderRow.layoutParams = rowLayoutParams
                 for (i in 0 until headerValues.size){
-                    formTableCell(
+                    Templates().formTableCell(
+                        context = this@Rainfall,
                         rowView = tableHeaderRow,
                         textValue = headerValues[i].text().replace(" ","\n"),
                         bgcolor = R.color.grey,
-                        textAlign = View.TEXT_ALIGNMENT_CENTER ,
+                        textAlign = View.TEXT_ALIGNMENT_CENTER,
                         isBold = true
                     )
                 }
@@ -99,7 +78,8 @@ class Rainfall : AppCompatActivity() {
                     tableHeaderRow.setBackgroundColor(ContextCompat.getColor(this@Rainfall, R.color.black))
                     tableRow.layoutParams = rowLayoutParams
                     for (j in 0 until headerValues.size){
-                        formTableCell(
+                        Templates().formTableCell(
+                            context = this@Rainfall,
                             rowView = tableRow,
                             textValue = values[k++].text().replace(" ", "\n"),
                             bgcolor = R.color.light_grey,
@@ -131,6 +111,7 @@ class Rainfall : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.rainfall)
+        rainfallTextView = findViewById(R.id.rainfallTextView)
 
         val utcCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         val year = utcCalendar.get(Calendar.YEAR)
@@ -141,41 +122,64 @@ class Rainfall : AppCompatActivity() {
         val spinner = findViewById<Spinner>(R.id.stateSpinner)
 
         lifecycleScope.launch {
-            val statesList = ArrayList<String>()
-            val statesUrl = "http://aws.imd.gov.in:8091/AWS/sta.php?types=ALL"
-            withContext(Dispatchers.IO) {
-                val response = HttpClient(CIO).request<HttpResponse>(statesUrl) {
-                    method = HttpMethod.Get
+            try {
+                val statesList = ArrayList<String>()
+                val statesUrl = "http://aws.imd.gov.in:8091/AWS/sta.php?types=ALL"
+                withContext(Dispatchers.IO) {
+                    val response = HttpClient(CIO).request<HttpResponse>(statesUrl) {
+                        method = HttpMethod.Get
+                    }
+                    val jsonObject = JSONObject(response.readText())
+                    val jsonArray = jsonObject.getJSONArray("data")
+                    for (i in 0 until jsonArray.length()) {
+                        statesList.add(jsonArray.getString(i))
+                    }
                 }
-                val jsonObject = JSONObject(response.readText())
-                val jsonArray = jsonObject.getJSONArray("data")
-                for (i in 0 until jsonArray.length()){
-                    statesList.add(jsonArray.getString(i))
+                withContext(Dispatchers.Main) {
+                    val adapter = ArrayAdapter(
+                        this@Rainfall,
+                        android.R.layout.simple_spinner_item,
+                        statesList
+                    )
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spinner.adapter = adapter
+                    spinner.setSelection(adapter.getPosition(resources.getString(R.string.default_state)))
+                    spinner.visibility = View.VISIBLE
                 }
+            }catch(e:java.nio.channels.UnresolvedAddressException){
+                rainfallTextView.text = resources.getString(R.string.error_internet_failure)
+                rainfallTextView.visibility = View.VISIBLE
             }
-            withContext(Dispatchers.Main){
-                val adapter = ArrayAdapter(this@Rainfall, android.R.layout.simple_spinner_item, statesList)
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner.adapter = adapter
-                spinner.setSelection(adapter.getPosition(resources.getString(R.string.default_state)))
-                spinner.visibility = View.VISIBLE
+            catch(e:Exception){
+                println("Exception !@!@! ${e.message}")
+                rainfallTextView.text = resources.getString(R.string.error_unable_to_retrieve)
+                rainfallTextView.visibility = View.VISIBLE
             }
         }
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val state = spinner.adapter.getItem(position)?:resources.getString(R.string.default_state)
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val state = spinner.adapter.getItem(position)
+                    ?: resources.getString(R.string.default_state)
                 println("chosen #$# :${state}")
-                val url = "http://aws.imd.gov.in:8091/AWS/dataviewrain.php?a=ALL&b=${state}&c=${formattedDate}"
-                lifecycleScope.launch{
+                val url =
+                    "http://aws.imd.gov.in:8091/AWS/dataviewrain.php?a=ALL&b=${state}&c=${formattedDate}"
+                lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
                         retrieveData(url)
                     }
                 }
             }
+
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
         }
+
     }
 }
