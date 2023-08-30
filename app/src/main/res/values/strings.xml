@@ -55,11 +55,19 @@
     <string name="lake_level_table_class_name">lack-view table table-responsive table-striped table-bordered</string>
 
     <string name="stations_base_url">http://aws.imd.gov.in:8091/AWS</string>
-    <string name="stations_type">AWSAGRO</string>
+    <string-array name="stations_type">
+        <item>AWSAGRO</item>
+        <item>ARG</item>
+    </string-array>
+    <string name="stations_type_default">AWSAGRO</string>
     <string name="stations_states">sta.php</string>
     <string name="stations_districts">dis.php</string>
     <string name="stations_stations">stat.php</string>
     <string name="stations_dataview">dataview.php</string>
+    <string name="stations_spinner_type_text">Type: </string>
+    <string name="stations_spinner_states_text">State: </string>
+    <string name="stations_spinner_districts_text">District: </string>
+    <string name="stations_spinner_stations_text">Station: </string>
 
     <string name="rainfall_dataview">dataviewrain.php</string>
     <string name="rainfall_stations_type">ALL</string>

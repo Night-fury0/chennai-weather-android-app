@@ -9,6 +9,7 @@ import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.ktor.client.HttpClient
@@ -32,7 +33,7 @@ import java.util.TimeZone
 class Rainfall : AppCompatActivity() {
 
     private lateinit var rainfallTextView: TextView
-    private lateinit var rainfallContent: ScrollView
+    private lateinit var rainfallContent: NestedScrollView
 
     private suspend fun spinner1Population(spinner: Spinner){
         try {

@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.HorizontalScrollView
-import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.ktor.client.HttpClient
@@ -31,7 +30,7 @@ import java.util.TimeZone
 
 class Stations : AppCompatActivity() {
     private lateinit var stationsTextView: TextView
-    private lateinit var stationsContent: ScrollView
+    private lateinit var stationsContent: NestedScrollView
     private suspend fun retrieveData(url: String){
         val values: Elements
         val headerValues: Elements
@@ -46,9 +45,9 @@ class Stations : AppCompatActivity() {
                 val response: HttpResponse = client.request(url) {
                     method = HttpMethod.Get
                 }
-                val doc: Document = Jsoup.parse(response.readText());
+                val doc: Document = Jsoup.parse(response.readText())
 //                val doc: Document = Jsoup.parse(response.bodyAsText());
-                val tableElement: Element = doc.getElementsByTag("table")[0];
+                val tableElement: Element = doc.getElementsByTag("table")[0]
                 values = tableElement.getElementsByTag("td")
                 headerValues = tableElement.getElementsByTag("th")
             }
@@ -75,53 +74,100 @@ class Stations : AppCompatActivity() {
         }
     }
 
-    private suspend fun spinner1Population(spinner1: Spinner){
+    private suspend fun spinnerTypePopulation(spinnerType: Spinner){
         try {
-            val states_list = ArrayList<String>()
-            val spinner1Url = resources.getString(R.string.stations_base_url) +
-                    "/${resources.getString(R.string.stations_states)}" +
-                    "?types=${resources.getString(R.string.stations_type)}"
-            withContext(Dispatchers.IO) {
-                val response = HttpClient(CIO).request<HttpResponse>(spinner1Url) {
-                    method = HttpMethod.Get
-                }
-                val jsonObject = JSONObject(response.readText())
-                val jsonArray = jsonObject.getJSONArray("data")
-                for (i in 0 until jsonArray.length()) {
-                    states_list.add(jsonArray.getString(i))
-                }
-            }
             withContext(Dispatchers.Main) {
                 val adapter = ArrayAdapter(
                     this@Stations,
                     android.R.layout.simple_spinner_item,
-                    states_list
+                    resources.getStringArray(R.array.stations_type)
                 )
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner1.adapter = adapter
-                spinner1.setSelection(adapter.getPosition(resources.getString(R.string.default_state)))
-                spinner1.visibility = View.VISIBLE
+                spinnerType.adapter = adapter
+                spinnerType.setSelection(adapter.getPosition(resources.getString(R.string.stations_type_default)))
+                spinnerType.visibility = View.VISIBLE
             }
-        }catch(e:java.nio.channels.UnresolvedAddressException){
-            stationsTextView.text = resources.getString(R.string.error_internet_failure)
-            stationsTextView.visibility = View.VISIBLE
-        }
-        catch(e:Exception){
+        }catch(e:Exception){
             println("Exception !@!@! ${e.message}")
             stationsTextView.text = resources.getString(R.string.error_unable_to_retrieve)
             stationsTextView.visibility = View.VISIBLE
         }
     }
 
-    private fun spinner1OnSelect(spinner1:Spinner, spinner2:Spinner, spinner3:Spinner, position:Int){
+    private fun spinnerTypeOnSelect(spinnerType:Spinner, spinner1:Spinner, spinner2:Spinner, spinner3:Spinner, position:Int){
         try{
+            val type = spinnerType.adapter.getItem(position)
+                ?: resources.getString(R.string.default_state)
+            val spinner1Url = resources.getString(R.string.stations_base_url) +
+                    "/${resources.getString(R.string.stations_states)}" +
+                    "?types=${type}"
+            val statesList = ArrayList<String>()
+            lifecycleScope.launch {
+                try {
+                    withContext(Dispatchers.IO) {
+                        val response = HttpClient(CIO).request<HttpResponse>(spinner1Url) {
+                            method = HttpMethod.Get
+                        }
+                        val jsonObject = JSONObject(response.readText())
+                        val jsonArray = jsonObject.getJSONArray("data")
+                        for (i in 0 until jsonArray.length()) {
+                            statesList.add(jsonArray.getString(i))
+                        }
+                    }
+                    withContext(Dispatchers.Main) {
+                        val adapter = ArrayAdapter(
+                            this@Stations,
+                            android.R.layout.simple_spinner_item,
+                            statesList
+                        )
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spinner1.adapter = adapter
+                        spinner1.setSelection(adapter.getPosition(resources.getString(R.string.default_state)))
+                        spinner1.visibility = View.VISIBLE
+                    }
+                }catch(e:java.nio.channels.UnresolvedAddressException){
+                    stationsTextView.text = resources.getString(R.string.error_internet_failure)
+                    stationsTextView.visibility = View.VISIBLE
+                    spinner1.visibility = View.INVISIBLE
+                    spinner2.visibility = View.INVISIBLE
+                    spinner3.visibility = View.INVISIBLE
+                }
+                catch(e:Exception){
+                    println("Exception !@!@! ${e.message}")
+                    stationsTextView.text = resources.getString(R.string.error_unable_to_retrieve)
+                    stationsTextView.visibility = View.VISIBLE
+                    spinner1.visibility = View.INVISIBLE
+                    spinner2.visibility = View.INVISIBLE
+                    spinner3.visibility = View.INVISIBLE
+                }
+            }
+        }catch(e:java.nio.channels.UnresolvedAddressException){
+            stationsTextView.text = resources.getString(R.string.error_internet_failure)
+            stationsTextView.visibility = View.VISIBLE
+            spinner1.visibility = View.INVISIBLE
+            spinner2.visibility = View.INVISIBLE
+            spinner3.visibility = View.INVISIBLE
+        }
+        catch(e:Exception){
+            println("Exception !@!@! ${e.message}")
+            stationsTextView.text = resources.getString(R.string.error_unable_to_retrieve)
+            stationsTextView.visibility = View.VISIBLE
+            spinner1.visibility = View.INVISIBLE
+            spinner2.visibility = View.INVISIBLE
+            spinner3.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun spinner1OnSelect(spinnerType: Spinner, spinner1:Spinner, spinner2:Spinner, spinner3:Spinner, position:Int){
+        try{
+            val type = spinnerType.selectedItem
             val state = spinner1.adapter.getItem(position)
                 ?: resources.getString(R.string.default_state)
             val spinner2Url = resources.getString(R.string.stations_base_url) +
                     "/${resources.getString(R.string.stations_districts)}" +
-                    "?types=${resources.getString(R.string.stations_type)}" +
+                    "?types=${type}" +
                     "&states=${state}"
-            val district_list = ArrayList<String>()
+            val districtsList = ArrayList<String>()
             lifecycleScope.launch {
                 try {
                     withContext(Dispatchers.IO) {
@@ -131,14 +177,14 @@ class Stations : AppCompatActivity() {
                         val jsonObject = JSONObject(response.readText())
                         val jsonArray = jsonObject.getJSONArray("data")
                         for (i in 0 until jsonArray.length()) {
-                            district_list.add(jsonArray.getString(i))
+                            districtsList.add(jsonArray.getString(i))
                         }
                     }
                     withContext(Dispatchers.Main) {
                         val adapter = ArrayAdapter(
                             this@Stations,
                             android.R.layout.simple_spinner_item,
-                            district_list
+                            districtsList
                         )
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinner2.adapter = adapter
@@ -174,16 +220,18 @@ class Stations : AppCompatActivity() {
         }
     }
 
-    private fun spinner2OnSelect(spinner1:Spinner, spinner2:Spinner, spinner3:Spinner, position:Int){
+    private fun spinner2OnSelect(spinnerType: Spinner, spinner1:Spinner, spinner2:Spinner, spinner3:Spinner, position:Int){
         try {
+            val type = spinnerType.selectedItem
             val state = spinner1.selectedItem
             val district = spinner2.adapter.getItem(position)
                 ?: resources.getString(R.string.default_district)
             val spinner3Url = resources.getString(R.string.stations_base_url) +
                     "/${resources.getString(R.string.stations_stations)}" +
-                    "?types=${resources.getString(R.string.stations_type)}" +
-                    "&states=${state}&disc=${district}"
-            val stations_list = ArrayList<String>()
+                    "?types=${type}" +
+                    "&states=${state}" +
+                    "&disc=${district}"
+            val stationsList = ArrayList<String>()
             lifecycleScope.launch {
                 try {
                     withContext(Dispatchers.IO) {
@@ -193,14 +241,14 @@ class Stations : AppCompatActivity() {
                         val jsonObject = JSONObject(response.readText())
                         val jsonArray = jsonObject.getJSONArray("data")
                         for (i in 0 until jsonArray.length()) {
-                            stations_list.add(jsonArray.getString(i))
+                            stationsList.add(jsonArray.getString(i))
                         }
                     }
                     withContext(Dispatchers.Main) {
                         val adapter = ArrayAdapter(
                             this@Stations,
                             android.R.layout.simple_spinner_item,
-                            stations_list
+                            stationsList
                         )
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinner3.adapter = adapter
@@ -235,15 +283,16 @@ class Stations : AppCompatActivity() {
         }
     }
 
-    private fun spinner3OnSelect(spinner1:Spinner, spinner2:Spinner, spinner3: Spinner, position:Int, formattedDate:String){
+    private fun spinner3OnSelect(spinnerType:Spinner, spinner1:Spinner, spinner2:Spinner, spinner3: Spinner, position:Int, formattedDate:String){
         try {
+            val type = spinnerType.selectedItem
             val state = spinner1.selectedItem
             val district = spinner2.selectedItem
             val station = spinner3.adapter.getItem(position)
                 ?: resources.getString(R.string.default_station)
             val url = resources.getString(R.string.stations_base_url) +
                     "/${resources.getString(R.string.stations_dataview)}" +
-                    "?a=${resources.getString(R.string.stations_type)}" +
+                    "?a=${type}" +
                     "&b=${state}" +
                     "&c=${district}" +
                     "&d=${station}" +
@@ -251,7 +300,7 @@ class Stations : AppCompatActivity() {
                     "&f=${formattedDate}" +
                     "&g=ALL_HOUR" +
                     "&h=ALL_MINUTE"
-            lifecycleScope.launch() {
+            lifecycleScope.launch{
                 withContext(Dispatchers.IO) {
                     retrieveData(url)
                 }
@@ -279,22 +328,33 @@ class Stations : AppCompatActivity() {
         val day = utcCalendar.get(Calendar.DAY_OF_MONTH)
         val formattedDate = String.format(resources.getString(R.string.stations_dateformat), year, month, day)
 
-        val spinner1 = findViewById<Spinner>(R.id.stationsSpinner1)
-        val spinner2 = findViewById<Spinner>(R.id.stationsSpinner2)
-        val spinner3 = findViewById<Spinner>(R.id.stationsSpinner3)
+        val spinnerTypes = findViewById<Spinner>(R.id.stationsSpinnerType)
+        val spinnerStates = findViewById<Spinner>(R.id.stationsSpinnerStates)
+        val spinnerDistricts = findViewById<Spinner>(R.id.stationsSpinnerDistricts)
+        val spinnerStations = findViewById<Spinner>(R.id.stationsSpinnerStations)
+
+        val adapter = ArrayAdapter(
+            this@Stations,
+            android.R.layout.simple_spinner_item,
+            resources.getStringArray(R.array.stations_type)
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerTypes.adapter = adapter
+        spinnerTypes.setSelection(adapter.getPosition(resources.getString(R.string.stations_type_default)))
+        spinnerTypes.visibility = View.VISIBLE
 
         lifecycleScope.launch {
-            spinner1Population(spinner1)
+            spinnerTypePopulation(spinnerTypes)
         }
 
-        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerTypes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                spinner1OnSelect(spinner1, spinner2, spinner3, position)
+                spinnerTypeOnSelect(spinnerTypes, spinnerStates, spinnerDistricts, spinnerStations, position)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -302,14 +362,14 @@ class Stations : AppCompatActivity() {
             }
         }
 
-        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerStates.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                spinner2OnSelect(spinner1, spinner2, spinner3, position)
+                spinner1OnSelect(spinnerTypes, spinnerStates, spinnerDistricts, spinnerStations, position)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -317,14 +377,29 @@ class Stations : AppCompatActivity() {
             }
         }
 
-        spinner3.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerDistricts.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                spinner3OnSelect(spinner1,spinner2,spinner3,position, formattedDate)
+                spinner2OnSelect(spinnerTypes, spinnerStates, spinnerDistricts, spinnerStations, position)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        spinnerStations.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                spinner3OnSelect(spinnerTypes, spinnerStates,spinnerDistricts,spinnerStations,position, formattedDate)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -334,18 +409,21 @@ class Stations : AppCompatActivity() {
 
         val stationsRefresh = findViewById<SwipeRefreshLayout>(R.id.stationsRefresh)
         stationsRefresh.setOnRefreshListener {
-            if (spinner3.visibility == View.VISIBLE){
-                spinner3OnSelect(spinner1,spinner2,spinner3,spinner3.selectedItemPosition,formattedDate)
+            if (spinnerStations.visibility == View.VISIBLE){
+                spinner3OnSelect(spinnerTypes, spinnerStates,spinnerDistricts,spinnerStations,spinnerStations.selectedItemPosition,formattedDate)
             }
-            else if (spinner2.visibility == View.VISIBLE){
-                spinner2OnSelect(spinner1, spinner2, spinner3, spinner2.selectedItemPosition)
+            else if (spinnerDistricts.visibility == View.VISIBLE){
+                spinner2OnSelect(spinnerTypes, spinnerStates, spinnerDistricts, spinnerStations, spinnerDistricts.selectedItemPosition)
             }
-            else if (spinner1.visibility == View.VISIBLE){
-                spinner1OnSelect(spinner1, spinner2, spinner3, spinner1.selectedItemPosition)
+            else if (spinnerStates.visibility == View.VISIBLE){
+                spinner1OnSelect(spinnerTypes, spinnerStates, spinnerDistricts, spinnerStations, spinnerStates.selectedItemPosition)
+            }
+            else if (spinnerTypes.visibility == View.VISIBLE){
+                spinnerTypeOnSelect(spinnerTypes, spinnerStates, spinnerDistricts, spinnerStations, spinnerTypes.selectedItemPosition)
             }
             else{
                 lifecycleScope.launch {
-                    spinner1Population(spinner1)
+                    spinnerTypePopulation(spinnerTypes)
                 }
             }
             stationsRefresh.isRefreshing = false

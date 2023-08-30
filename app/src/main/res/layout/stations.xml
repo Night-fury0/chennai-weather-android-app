@@ -24,45 +24,75 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/stationsSpinner1"
+        <LinearLayout
+            android:id="@+id/stationsSpinnerContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/stationsHeader"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="15dp"
-            android:visibility="invisible"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TableRow android:layout_weight="1">
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="@string/stations_spinner_type_text"
+                        android:textSize="17sp"/>
+                    <Spinner
+                        android:layout_weight="1"
+                        android:id="@+id/stationsSpinnerType"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:visibility="invisible"/>
+                </TableRow>
+                <TableRow android:layout_weight="1">
+                    <TextView
+                        android:layout_weight="1"
+                        android:text="@string/stations_spinner_states_text"
+                        android:textSize="17sp"/>
+                    <Spinner
+                        android:layout_weight="1"
+                        android:id="@+id/stationsSpinnerStates"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:visibility="invisible"/>
+                </TableRow>
+                <TableRow android:layout_weight="1">
+                    <TextView
+                        android:textSize="17sp"
+                        android:layout_weight="1"
+                        android:text="@string/stations_spinner_districts_text"/>
+                    <Spinner
+                        android:layout_weight="1"
+                        android:id="@+id/stationsSpinnerDistricts"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible" />
+                </TableRow>
+                <TableRow android:layout_weight="1">
+                    <TextView
+                        android:textSize="17sp"
+                        android:layout_weight="1"
+                        android:text="@string/stations_spinner_stations_text"/>
+                    <Spinner
+                        android:layout_weight="1"
+                        android:id="@+id/stationsSpinnerStations"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
 
-        <Spinner
-            android:id="@+id/stationsSpinner2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/stationsSpinner1"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="10dp"
-            android:visibility="invisible"
-            android:layout_centerHorizontal="true"/>
 
-        <Spinner
-            android:id="@+id/stationsSpinner3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/stationsSpinner2"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="10dp"
-            android:visibility="invisible"
-            android:layout_centerHorizontal="true"/>
-
-
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/stationsContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/stationsSpinner3"
+            android:layout_below="@id/stationsSpinnerContainer"
             android:layout_marginTop="20dp"
             android:layout_above="@id/stationsTextView"
             android:layout_marginBottom="10dp"
@@ -98,7 +128,7 @@
                 </HorizontalScrollView>
 
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <TextView
             android:id="@+id/stationsTextView"
