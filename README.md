@@ -1,2 +1,1 @@
-# android-apps
-Development Code for Android Apps
+Development Code for Android App
